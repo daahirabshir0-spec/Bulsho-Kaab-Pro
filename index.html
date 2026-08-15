@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-xl font-bold">🛒 Bulsho Kaab Pro</h1>
+        <div class="flex items-center gap-2">
+            <span id="dateDisplay" class="text-xs bg-emerald-800 px-2 py-1 rounded"></span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="p-4 max-w-4xl mx-auto space-y-6">
+
+        <!-- Quick Stats / Actions -->
+        <div class="grid grid-cols-2 gap-3">
+            <button onclick="switchTab('iibka')" id="btnIibka" class="bg-emerald-600 text-white p-3 rounded-xl font-semibold shadow transition">Diiwaanka Iibka</button>
+            <button onclick="switchTab('macaamiisha')" id="btnMacaamiisha" class="bg-white text-slate-700 border border-slate-200 p-3 rounded-xl font-semibold shadow-sm transition">Macaamiisha & Dahabka</button>
+        </div>
+
+        <!-- TAB 1: IIBKA (Sales Entry & List) -->
+        <div id="tabIibka" class="space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-md font-bold text-emerald-700 mb-3">Diiwaangeli Iib Cusub</h2>
+                <form id="saleForm" onsubmit="saveSale(event)" class="space-y-3">
+                    <input type="hidden" id="saleId">
+                    <div>
+                        <label class="text-xs text-slate-500 font-medium">Magaca Macmiilka</label>
+                        <input type="text" id="custName" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Teleefanka</label>
+                            <input type="tel" id="custPhone" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Lacagta (USD)</label>
+                            <input type="number" step="0.01" id="saleAmount" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-500 font-medium">Faahfaahinta / Badeecada</label>
+                        <input type="text" id="saleDesc" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button type="submit" id="saveBtn" class="flex-1 bg-emerald-600 text-white py-2 rounded-lg font-semibold text-sm shadow">Kaydi Xogta</button>
+                        <button type="button" onclick="resetForm()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm">Tirtir Foomka</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- List of Sales -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="text-md font-bold text-slate-700 mb-3">Liiska Iibka ee la Diiwaangeliyey</h3>
+                <div id="salesList" class="space-y-3">
+                    <!-- Dynamic Items will load here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MACAAMIISHA -->
+<div id="tabMacaamiisha" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center py-10">
+                <p class="text-slate-500 text-sm">Qaybtan macaamiisha iyo xisaabaadka guud waa mid diyaar ah. Waxaad ka maamuli kartaa xogahaaga halkan.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Set current date
+        document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString('so-SO');
+
+        let salesData = JSON.parse(localStorage.getItem('bulsho_sales')) || [];
+
+        function switchTab(tab) {
+            if(tab === 'iibka') {
+                document.getElementById('tabIibka').classList.remove('hidden');
+                document.getElementById('tabMacaamiisha').classList.add('hidden');
+                document.getElementById('btnIibka').className = "bg-emerald-600 text-white p-3 rounded-xl font-semibold shadow transition";
+                document.getElementById('btnMacaamiisha').className = "bg-white text-slate-700 border border-slate-200 p-3 rounded-xl font-semibold shadow-sm transition";
+            } else {
+                document.getElementById('tabIibka').classList.add('hidden');
+                document.getElementById('tabMacaamiisha').classList.remove('hidden');
+                document.getElementById('btnMacaamiisha').className = "bg-emerald-600 text-white p-3 rounded-xl font-semibold shadow transition";
+                document.getElementById('btnIibka').className = "bg-white text-slate-700 border border-slate-200 p-3 rounded-xl font-semibold shadow-sm transition";
+            }
+        }
+
+        function saveSale(e) {
+            e.preventDefault();
+            const id = document.getElementById('saleId').value;
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const amount = document.getElementById('saleAmount').value;
+            const desc = document.getElementById('saleDesc').value;
+            const date = new Date().toLocaleString();
+
+            if(id) {
+                // Edit existing
+                salesData = salesData.map(item => item.id == id ? {...item, name, phone, amount, desc} : item);
+            } else {
+                // Add new
+                const newItem = { id: Date.now(), name, phone, amount, desc, date };
+                salesData.unshift(newItem);
+            }
+
+            localStorage.setItem('bulsho_sales', JSON.stringify(salesData));
+            resetForm();
+            renderSales();
+        }
+
+        function renderSales() {
+            const list = document.getElementById('salesList');
+            if(salesData.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Weli wax iib ah lama diiwaangelin.</p>`;
+                return;
+            }
+            list.innerHTML = salesData.map(item => `
+                <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-800">${item.name} <span class="text-emerald-600 font-semibold">($${item.amount})</span></h4>
+                        <p class="text-xs text-slate-500">${item.desc} - Tel: ${item.phone}</p>
+                        <span class="text-[10px] text-slate-400">${item.date}</span>
+                    </div>
+                    <div class="flex gap-1">
+                        <button onclick="sendWhatsApp('${item.phone}', '${item.name}', '${item.amount}', '${item.desc}')" class="bg-green-500 text-white p-1.5 rounded-lg text-xs" title="WhatsApp">💬</button>
+                        <button onclick="editSale(${item.id})" class="bg-amber-500 text-white p-1.5 rounded-lg text-xs" title="Wax ka beddel">✏️</button>
+                        <button onclick="deleteSale(${item.id})" class="bg-rose-500 text-white p-1.5 rounded-lg text-xs" title="Tirtir">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editSale(id) {
+            const item = salesData.find(i => i.id == id);
+            if(item) {
+                document.getElementById('saleId').value = item.id;
+                document.getElementById('custName').value = item.name;
+                document.getElementById('custPhone').value = item.phone;
+                document.getElementById('saleAmount').value = item.amount;
+                document.getElementById('saleDesc').value = item.desc;
+                document.getElementById('saveBtn').innerText = "Cusboonaysii (Update)";
+            }
+        }
+
+        function deleteSale(id) {
+            if(confirm("Ma hubtaa inaad tirtiraysaan xogtan?")) {
+                salesData = salesData.filter(i => i.id != id);
+                localStorage.setItem('bulsho_sales', JSON.stringify(salesData));
+                renderSales();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('saleForm').reset();
+            document.getElementById('saleId').value = '';
+            document.getElementById('saveBtn').innerText = "Kaydi Xogta";
+        }
+
+        function sendWhatsApp(phone, name, amount, desc) {
+            const msg = `Salaan ${name}, Mahadsanid iibkaaga: ${desc} oo ah $${amount}. Bulsho Kaab Pro.`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Initial load
+        renderSales();
+    </script>
+</body>
+</html>
