@@ -3,7 +3,7 @@ const app = express();
 
 app.get('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
-    res.send(`<!DOCTYPE html>
+    res.write(`<!DOCTYPE html>
 <html lang="so">
 <head>
     <meta charset="UTF-8">
@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
     <div class="footer">Bulsho Kaab Pro · Debt & Business Management</div>
 </body>
 </html>`);
+    res.end();
 });
 
 module.exports = app;
