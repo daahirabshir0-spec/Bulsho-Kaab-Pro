@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
     res.send(`<!DOCTYPE html>
 <html lang="so">
 <head>
