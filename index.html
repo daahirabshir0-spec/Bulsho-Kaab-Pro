@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <header class="bg-emerald-700 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-lg font-bold">Bulsho Kaab Pro</h1>
+        <div class="bg-emerald-800 p-1 rounded-lg flex text-xs font-semibold">
+            <button onclick="setCurrency('USD')" id="currUSD" class="px-2 py-1 bg-white text-emerald-800 rounded">USD</button>
+            <button onclick="setCurrency('SOS')" id="currSOS" class="px-2 py-1 text-white">SOS</button>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        <!-- Dashboard Summary -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white p-3 rounded-2xl shadow-sm border text-center">
+                <p class="text-[10px] text-slate-400 uppercase font-bold">Wadarta Iibka</p>
+                <h3 id="totalSales" class="text-emerald-700 font-bold text-lg">0</h3>
+            </div>
+            <div class="bg-white p-3 rounded-2xl shadow-sm border text-center">
+                <p class="text-[10px] text-slate-400 uppercase font-bold">Wadarta Deynta</p>
+                <h3 id="totalDebt" class="text-rose-700 font-bold text-lg">0</h3>
+            </div>
+        </div>
+
+        <div id="homeView" class="grid grid-cols-2 gap-3">
+            <div onclick="openSection('sales')" class="bg-emerald-50 border p-4 rounded-2xl shadow-sm cursor-pointer text-center">
+                <div class="text-xl mb-1">📈</div>
+                <h3 class="font-bold text-sm">Iibka</h3>
+            </div>
+            <div onclick="openSection('debt')" class="bg-blue-50 border p-4 rounded-2xl shadow-sm cursor-pointer text-center">
+                <div class="text-xl mb-1">👥</div>
+                <h3 class="font-bold text-sm">Deen</h3>
+            </div>
+            <div onclick="openSection('generic')" class="bg-amber-50 border p-4 rounded-2xl shadow-sm cursor-pointer text-center">
+                <div class="text-xl mb-1">📋</div>
+                <h3 class="font-bold text-sm">Dalabaad</h3>
+            </div>
+            <div onclick="openSection('generic')" class="bg-purple-50 border p-4 rounded-2xl shadow-sm cursor-pointer text-center">
+                <div class="text-xl mb-1">🏢</div>
+                <h3 class="font-bold text-sm">Shirkad</h3>
+            </div>
+        </div>
+
+        <!-- Sections (Hidden initially) -->
+        <div id="sectionSales" class="hidden space-y-4">
+            <button onclick="goHome()" class="text-xs bg-slate-200 px-3 py-1 rounded-lg font-semibold">← Dib</button>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border">
+                <form id="saleForm" onsubmit="saveSale(event)" class="space-y-2">
+                    <input type="text" id="custName" placeholder="Magac" required class="w-full p-2 border rounded-lg text-sm">
+                    <input type="number" step="0.01" id="saleAmount" placeholder="Lacagta" required class="w-full p-2 border rounded-lg text-sm">
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-bold">Kaydi Iibka</button>
+                </form>
+            </div>
+            <div id="salesList" class="space-y-2"></div>
+        </div>
+
+        <div id="sectionDebt" class="hidden space-y-4">
+            <button onclick="goHome()" class="text-xs bg-slate-200 px-3 py-1 rounded-lg font-semibold">← Dib</button>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border">
+                <form id="debtForm" onsubmit="saveDebt(event)" class="space-y-2">
+                    <input type="text" id="debtName" placeholder="Magac" required class="w-full p-2 border rounded-lg text-sm">
+                    <input type="number" step="0.01" id="debtAmount" placeholder="Lacagta" required class="w-full p-2 border rounded-lg text-sm">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-bold">Kaydi Deen</button>
+                </form>
+            </div>
+            <div id="debtsList" class="space-y-2"></div>
+        </div>
+    </main>
+
+    <script>
+        let salesData = JSON.parse(localStorage.getItem('bulsho_sales')) || [];
+        let debtsData = JSON.parse(localStorage.getItem('bulsho_debts')) || [];
+        let curr = 'USD';
+
+        function updateDashboard() {
+            const sSum = salesData.reduce((a, b) => a + parseFloat(b.amount), 0);
+            const dSum = debtsData.reduce((a, b) => a + parseFloat(b.amount), 0);
+            document.getElementById('totalSales').innerText = `${curr} ${sSum}`;
+            document.getElementById('totalDebt').innerText = `${curr} ${dSum}`;
+        }
+
+        function openSection(sec) {
+            document.getElementById('homeView').classList.add('hidden');
+            if(sec === 'sales') { document.getElementById('sectionSales').classList.remove('hidden'); renderSales(); }
+            else if(sec === 'debt') { document.getElementById('sectionDebt').classList.remove('hidden'); renderDebts(); }
+        }
+
+        function goHome() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('sectionSales').classList.add('hidden');
+            document.getElementById('sectionDebt').classList.add('hidden');
+            updateDashboard();
+        }
+
+        function saveSale(e) {
+            e.preventDefault();
+            salesData.unshift({ name: document.getElementById('custName').value, amount: document.getElementById('saleAmount').value });
+            localStorage.setItem('bulsho_sales', JSON.stringify(salesData));
+            document.getElementById('saleForm').reset();
+            renderSales();
+        }
+
+        function saveDebt(e) {
+            e.preventDefault();
+            debtsData.unshift({ name: document.getElementById('debtName').value, amount: document.getElementById('debtAmount').value });
+            localStorage.setItem('bulsho_debts', JSON.stringify(debtsData));
+            document.getElementById('debtForm').reset();
+            renderDebts();
+        }
+
+        function renderSales() {
+            document.getElementById('salesList').innerHTML = salesData.map(i => `<div class="bg-white p-2 border rounded-lg text-xs">${i.name}: ${curr} ${i.amount}</div>`).join('');
+        }
+
+        function renderDebts() {
+            document.getElementById('debtsList').innerHTML = debtsData.map(i => `<div class="bg-white p-2 border rounded-lg text-xs">${i.name}: ${curr} ${i.amount}</div>`).join('');
+        }
+
+        updateDashboard();
+    </script>
+</body>
+</html>
