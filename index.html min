@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <style>
+        :root {
+            --primary: #004D40;
+            --accent: #00796B;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #1a1a1a;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 18px; color: var(--primary); cursor: pointer; }
+        
+        .main-container { max-width: 600px; margin: 15px auto; padding: 0 10px; }
+        .app-title { font-size: 22px; color: var(--primary); font-weight: 800; text-align: center; margin-bottom: 5px; }
+        .app-subtitle { color: #6c757d; font-size: 12px; text-align: center; margin-bottom: 20px; }
+
+        /* Dashboard Grid */
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .module-card { background: var(--card-bg); border-radius: 20px; padding: 20px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-align: center; cursor: pointer; transition: transform 0.1s; }
+        .module-card:active { transform: scale(0.98); }
+        .icon-box { width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+        .card-title { font-size: 17px; font-weight: bold; color: #111; margin: 5px 0 2px 0; }
+        .card-subtitle { font-size: 12px; color: #6c757d; margin-bottom: 12px; }
+        .open-btn { color: var(--accent); font-weight: bold; font-size: 13px; }
+
+        /* Views / Sections */
+        .view-section { display: none; background: white; border-radius: 16px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .view-section.active { display: block; }
+        
+        .back-link { display: inline-block; color: var(--accent); font-weight: bold; margin-bottom: 15px; cursor: pointer; text-decoration: none; font-size: 14px; }
+        
+        /* Forms & Inputs */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+        .btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 15px; }
+        .btn-danger { background: #d32f2f; margin-top: 5px; }
+
+        /* Tables & Lists */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f1f3f5; color: #333; }
+
+        /* POS Layout */
+        .pos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
+        .pos-item-card { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; }
+        .pos-item-card:hover { background: #e0f2f1; border-color: var(--accent); }
+        
+        .cart-summary { background: #f1f3f5; padding: 10px; border-radius: 8px; margin-top: 10px; }
+        .total-display { font-size: 18px; font-weight: bold; color: var(--primary); text-align: right; margin-top: 5px; }
+
+        .bg-sales { background: #e8f5e9; }
+        .bg-prod { background: #e0f2f1; }
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area" onclick="showView('home')">
+      <span>📖</span> Bulsho Kaab
+    </div>
+    <div style="font-weight: bold; font-size: 13px; color: var(--accent);">Pro v1.0</div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- HOME DASHBOARD -->
+    <div id="homeView" class="view-section active">
+      <div class="app-title">Bulsho Kaab Pro</div>
+      <div class="app-subtitle">Doorso qaybta aad rabto · Select a module to get started</div>
+
+      <div class="grid-container">
+        <!-- Iibka / POS -->
+        <div class="module-card" onclick="showView('posView')">
+          <div class="icon-box bg-sales">📈</div>
+          <div class="card-title">Iibka</div>
+          <div class="card-subtitle">Sales POS</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <!-- Alaabta / Inventory -->
+        <div class="module-card" onclick="showView('productsView')">
+          <div class="icon-box bg-prod">📦</div>
+          <div class="card-title">Alaabta</div>
+          <div class="card-subtitle">Products</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS VIEW -->
+    <div id="productsView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Ku noqo / Back</div>
+      <h3 style="color: var(--primary); margin-top: 0;">Diiwaanka Alaabta (Inventory)</h3>
+      
+      <div class="form-group">
+        <label>Magaca Alaabta (Product Name)</label>
+        <input type="text" id="pName" class="form-control" placeholder="Tusaale: Sokor, Bariis...">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha (Price in $)</label>
+        <input type="number" id="pPrice" class="form-control" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Tirada (Quantity)</label>
+        <input type="number" id="pQty" class="form-control" placeholder="0">
+      </div>
+      <button class="btn" onclick="saveProduct()">Keydi Alaabta (Save)</button>
+
+      <h4 style="margin-top: 20px; border-bottom: 2px solid #ddd; padding-bottom: 5px;">Liiska Alaabta Taala</h4>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Magaca</th>
+              <th>Qiimaha</th>
+              <th>Tirada</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="productListTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- POS / SALES VIEW -->
+    <div id="posView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Ku noqo / Back</div>
+      <h3 style="color: var(--primary); margin-top: 0;">Qeybta Iibka (Sales POS)</h3>
+      
+      <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Guji Alaabta si aad ugu darto iibka:</label>
+      <div class="pos-grid" id="posItemsGrid"></div>
+
+      <div class="cart-summary">
+        <h4 style="margin: 0 0 5px 0; font-size: 14px;">Qaansheegta (Cart):</h4>
+        <div id="cartItemsList" style="font-size: 13px; min-height: 40px; color: #555;">Gaari waa madhan yahay...</div>
+        <div class="total-display">Wadarta: $<span id="cartTotal">0.00</span></div>
+      </div>
+
+      <button class="btn" style="margin-top: 15px; background: #2e7d32;" onclick="completeSale()">Dhammee Iibka (Checkout)</button>
+    </div>
+
+  </div>
+
+  <script>
+    let products = JSON.parse(localStorage.getItem('bk_products')) || [];
+    let cart = [];
+
+    function showView(viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      if(viewId === 'home') {
+        document.getElementById('homeView').classList.add('active');
+      } else if(viewId === 'productsView') {
+        document.getElementById('productsView').classList.add('active');
+        renderProductsTable();
+      } else if(viewId === 'posView') {
+        document.getElementById('posView').classList.add('active');
+        renderPOSGrid();
+      }
+    }
+
+    function saveProduct() {
+      const name = document.getElementById('pName').value.trim();
+      const price = parseFloat(document.getElementById('pPrice').value);
+      const qty = parseInt(document.getElementById('pQty').value);
+
+      if(!name || isNaN(price) || isNaN(qty)) {
+        alert('Fadlan buuxi dhammaan xogta alaabta si sax ah!');
+        return;
+      }
+
+      products.push({ id: Date.now(), name, price, qty });
+      localStorage.setItem('bk_products', JSON.stringify(products));
+
+      document.getElementById('pName').value = '';
+      document.getElementById('pPrice').value = '';
+      document.getElementById('pQty').value = '';
+      
+      renderProductsTable();
+      alert('Alaabti waa la keydiyay!');
+    }
+
+    function renderProductsTable() {
+      const tbody = document.getElementById('productListTable');
+      tbody.innerHTML = '';
+      if(products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#888;">Wax alaab ah ma jiraan.</td></tr>`;
+        return;
+      }
+      products.forEach((p, index) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.name}</td>
+            <td>$${p.price.toFixed(2)}</td>
+            <td>${p.qty}</td>
+            <td><button class="btn-danger" style="padding:4px 8px; font-size:11px; border-radius:4px; border:none; color:white;" onclick="deleteProduct(${index})">Tirtir</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function deleteProduct(index) {
+      products.splice(index, 1);
+      localStorage.setItem('bk_products', JSON.stringify(products));
+      renderProductsTable();
+    }
+
+    function renderPOSGrid() {
+      const grid = document.getElementById('posItemsGrid');
+      grid.innerHTML = '';
+      if(products.length === 0) {
+        grid.innerHTML = `<div style="grid-column: span 2; text-align:center; color:#888; font-size:12px;">Horta alaab ku dar qeybta Alaabta!</div>`;
+        return;
+      }
+      products.forEach(p => {
+        grid.innerHTML += `
+          <div class="pos-item-card" onclick="addToCart(${p.id})">
+            <div style="font-weight:bold; font-size:13px;">${p.name}</div>
+            <div style="color:var(--accent); font-size:12px;">$${p.price.toFixed(2)}</div>
+            <div style="font-size:10px; color:#666;">Haray: ${p.qty}</div>
+          </div>
+        `;
+      });
+    }
+
+    function addToCart(id) {
+      const prod = products.find(p => p.id === id);
+      if(!prod || prod.qty <= 0) {
+        alert('Alaabtu way dhammaatay ama lama helin!');
+        return;
+      }
+      
+      const cartItem = cart.find(item => item.id === id);
+      if(cartItem) {
+        if(cartItem.qty < prod.qty) {
+          cartItem.qty++;
+        } else {
+          alert('Tirada intaas leeg kama hartay alaabta!');
+          return;
+        }
+      } else {
+        cart.push({ id: prod.id, name: prod.name, price: prod.price, qty: 1 });
+      }
+      renderCart();
+    }
+
+    function renderCart() {
+      const list = document.getElementById('cartItemsList');
+      const totalEl = document.getElementById('cartTotal');
+      list.innerHTML = '';
+      
+      if(cart.length === 0) {
+        list.innerHTML = 'Gaari waa madhan yahay...';
+        totalEl.innerText = '0.00';
+        return;
+      }
+
+      let total = 0;
+      cart.forEach(item => {
+        let subtotal = item.price * item.qty;
+        total += subtotal;
+        list.innerHTML += `<div>${item.name} (x${item.qty}) - $${subtotal.toFixed(2)}</div>`;
+      });
+      totalEl.innerText = total.toFixed(2);
+    }
+
+    function completeSale() {
+      if(cart.length === 0) {
+        alert('Fadlan alaab ku dar gaariga iibka!');
+        return;
+      }
+      
+      cart.forEach(cItem => {
+        const p = products.find(prod => prod.id === cItem.id);
+        if(p) {
+          p.qty -= cItem.qty;
+        }
+      });
+
+      localStorage.setItem('bk_products', JSON.stringify(products));
+      alert('Iibkii waa la guuleystay!');
+      cart = [];
+      renderCart();
+      renderPOSGrid();
+    }
+  </script>
+</body>
+</html>
