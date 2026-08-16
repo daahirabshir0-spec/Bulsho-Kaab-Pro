@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white text-slate-800 font-sans pb-40" translate="no">
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-100 p-4 shadow-xs flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+            <button onclick="goHome()" id="backBtn" class="hidden text-xl font-bold text-emerald-800 cursor-pointer">←</button>
+            <div class="flex items-center space-x-2">
+                <span class="text-emerald-800 font-bold text-xl">📖</span>
+                <h1 id="headerTitle" class="text-lg font-bold text-emerald-900 tracking-tight">Bulsho Kaab</h1>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div class="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs font-bold">
+                <span class="bg-emerald-700 text-white px-2.5 py-1 rounded-md shadow-xs">USD</span>
+                <span class="text-slate-500 px-2.5 py-1">SOS</span>
+            </div>
+            <span class="text-xl font-bold cursor-pointer text-slate-700 p-1">☰</span>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        
+        <!-- Home Dashboard View -->
+        <div id="homeView" class="space-y-6">
+            <div class="text-center pt-2 pb-1">
+                <h2 class="text-2xl font-bold text-emerald-900">Bulsho Kaab Pro</h2>
+                <p class="text-xs text-slate-400 mt-1">Doorso qaybta aad rabto · Select a module to get started</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pb-20">
+                <div onclick="openModule('sales')" class="bg-emerald-50/65 border border-emerald-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📈</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Iibka</h3>
+                        <p class="text-xs text-slate-500 font-medium">Sales</p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('customers')" class="bg-blue-50/65 border border-blue-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">👥</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Macaamiisha</h3>
+                        <p class="text-xs text-slate-500 font-medium">Customers</p>
+                    </div>
+                    <span class="text-xs font-bold text-blue-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('order')" class="bg-amber-50/65 border border-amber-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📋</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Dalabka</h3>
+                        <p class="text-xs text-slate-500 font-medium">Orders</p>
+                    </div>
+                    <span class="text-xs font-bold text-amber-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('companies')" class="bg-purple-50/65 border border-purple-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">🏢</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Shirkadaha</h3>
+                        <p class="text-xs text-slate-500 font-medium">Companies</p>
+                    </div>
+                    <span class="text-xs font-bold text-purple-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('products')" class="bg-cyan-50/65 border border-cyan-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📦</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Alaabta</h3>
+                        <p class="text-xs text-slate-500 font-medium">Products</p>
+                    </div>
+                    <span class="text-xs font-bold text-cyan-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('cost')" class="bg-rose-50/65 border border-rose-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">🧾</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Kharashaad</h3>
+                        <p class="text-xs text-slate-500 font-medium">Expenses</p>
+                    </div>
+                    <span class="text-xs font-bold text-rose-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('invoices')" class="bg-indigo-50/65 border border-indigo-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📄</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Invoice-yada</h3>
+                        <p class="text-xs text-slate-500 font-medium">Invoices</p>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('reports')" class="bg-sky-50/65 border border-sky-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📊</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Warbixin</h3>
+                        <p class="text-xs text-slate-500 font-medium">Report</p>
+                    </div>
+                    <span class="text-xs font-bold text-sky-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+            </div>
+            
+            <div class="text-center pb-6">
+                <p class="text-[11px] text-slate-400 font-medium">Bulsho Kaab Pro · Debt & Business Management</p>
+            </div>
+        </div>
+
+        <!-- Module List View -->
+        <div id="moduleView" class="hidden space-y-3">
+            <div class="bg-white p-3 rounded-2xl border flex items-center shadow-xs">
+                <span class="text-slate-400 mr-2">🔍</span>
+                <input type="text" id="searchBox" placeholder="Raadi..." oninput="filterData()" class="w-full text-sm outline-none">
+            </div>
+            <div class="flex justify-between items-center px-1">
+                <span id="moduleCountText" class="text-xs font-bold text-slate-500 uppercase">Wadarta: <span id="itemCount">0</span></span>
+            </div>
+            <div id="itemsList" class="space-y-2 pb-24"></div>
+            
+            <button onclick="openAddModal()" id="addBtnText" class="fixed bottom-6 right-6 bg-emerald-600 text-white px-5 py-3 rounded-full shadow-lg font-bold text-xs flex items-center space-x-1 z-40 cursor-pointer">
+                <span>+ KU DAR CUSUB</span>
+            </button>
+        </div>
+
+        <!-- Reports Dashboard View -->
+        <div id="reportsView" class="hidden space-y-4 pb-24">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-500 px-1">
+                <span id="reportDateLabel">08-16</span>
+                <span onclick="window.print()" class="cursor-pointer text-emerald-700 font-bold">PDF</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-emerald-50/40 border border-emerald-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-emerald-800 flex items-center">📈 IIB + DALAB (DAKHLIGA)</span>
+                    <h3 id="repSalesVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">0 iib · 0 dalab</p>
+                </div>
+
+                <div class="bg-rose-50/40 border border-rose-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-rose-800 flex items-center">📉 KHARASHAADKA</span>
+                    <h3 id="repExpenseVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">0 kharash</p>
+                </div>
+
+                <div class="bg-sky-50/40 border border-sky-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-sky-800 flex items-center">💳 FAA'IIDADA SAAFIGA</span>
+                    <h3 id="repNetVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">Dakhliga – kharashaadka</p>
+                </div>
+
+                <div class="bg-indigo-50/40 border border-indigo-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-indigo-800 flex items-center">📊 INVOICE-YADA</span>
+                    <h3 id="repInvoiceVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">0 invoice</p>
+                </div>
+
+                <div class="bg-amber-50/40 border border-amber-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-amber-800 flex items-center">📉 DEYNTA MACAAMIISHA</span>
+                    <h3 id="repCustDebtVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">Hadda taagan</p>
+                </div>
+
+                <div class="bg-amber-50/40 border border-amber-100 p-4 rounded-3xl shadow-xs space-y-1">
+                    <span class="text-[10px] font-bold text-amber-800 flex items-center">🏦 DEYNTA SHIRKADAHA</span>
+                    <h3 id="repCompDebtVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                    <p class="text-[11px] text-slate-400 font-medium">Hadda taagan</p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50/40 border border-amber-100 p-4 rounded-3xl shadow-xs space-y-1">
+                <span class="text-[10px] font-bold text-amber-800 flex items-center">🏛️ DEYNTA GUUD</span>
+                <h3 id="repTotalDebtVal" class="text-2xl font-bold text-slate-900">$0.00</h3>
+                <p class="text-[11px] text-slate-400 font-medium">Macaamiisha + Shirkadaha</p>
+            </div>
+        </div>
+
+        <!-- Detailed Item View -->
+        <div id="detailView" class="hidden space-y-4 pb-28">
+            <div class="bg-white p-3 rounded-2xl border shadow-xs flex justify-around items-center text-center text-xs text-slate-600">
+                <div onclick="actionTable()" class="cursor-pointer hover:text-emerald-700"><span class="text-lg block">📊</span>Jadwal</div>
+                <div onclick="actionPDF()" class="cursor-pointer hover:text-emerald-700"><span class="text-lg block">📄</span>PDF</div>
+                <div onclick="actionSMS()" class="cursor-pointer hover:text-emerald-700"><span class="text-lg block">💬</span>SMS</div>
+                <div onclick="actionCall()" class="cursor-pointer hover:text-emerald-700"><span class="text-lg block">📞</span>Wac</div>
+                <div onclick="actionWhatsApp()" class="cursor-pointer hover:text-emerald-700"><span class="text-lg block">💚</span>WhatsApp</div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border shadow-xs space-y-1 text-center relative">
+                <span class="text-[11px] text-slate-400 font-semibold block">Wadarta Guud / Haraaga</span>
+                <div class="text-3xl font-bold text-indigo-600 my-1">USD <span id="detBalance">0.00</span></div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <h3 class="text-xs font-bold text-slate-500 uppercase">Dhaqdhaqaaqa <span id="transCount">0</span></h3>
+            </div>
+            
+            <div id="detailTransactions" class="space-y-3"></div>
+
+            <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 max-w-md mx-auto grid grid-cols-2 gap-3 shadow-lg z-40">
+                <button onclick="openTransModal('plus')" class="bg-indigo-600 text-white py-3.5 rounded-xl text-xs font-bold shadow-sm cursor-pointer">KU DAR LACAG</button>
+                <button onclick="openTransModal('minus')" class="bg-emerald-700 text-white py-3.5 rounded-xl text-xs font-bold shadow-sm cursor-pointer">BIXI / JAR</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Generic Add/Edit Modal (For Normal Modules) -->
+    <div id="addItemModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-6 rounded-3xl shadow-xl space-y-4">
+            <h3 id="modalTitleText" class="font-bold text-base text-slate-800 text-center">Diiwaangeli Cusub</h3>
+            <div class="space-y-3">
+                <input type="text" id="inputName" placeholder="Magaca" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+                <input type="text" id="inputPhone" placeholder="Lambarka talefanka" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+                <input type="text" id="inputWhatsapp" placeholder="WhatsApp" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+                <input type="number" step="0.01" id="inputAmount" placeholder="Lacagta Bilowga ah (USD)" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+            </div>
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-3 rounded-xl text-xs font-bold cursor-pointer">Ka laabo</button>
+                <button onclick="saveItemData()" class="w-1/2 bg-emerald-700 text-white py-3 rounded-xl text-xs font-bold shadow cursor-pointer">KEYDI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Specific Invoice Modal (Matches Image 4088.jpg) -->
+    <div id="addInvoiceModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-md p-5 rounded-3xl shadow-xl space-y-3 my-auto max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-1 border-b">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">📄</span>
+                    <h3 class="font-bold text-base text-slate-900">Invoice Cusub</h3>
+                </div>
+                <span onclick="closeModals()" class="text-xl font-bold text-slate-400 cursor-pointer">&times;</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Lambarka *</label>
+                    <input type="text" id="invNumber" value="INV-001" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Taariikhda bixinta</label>
+                    <input type="date" id="invDate" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Macmiilka *</label>
+                    <input type="text" id="invCustomer" placeholder="Magaca macmiilka" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Telefoonka</label>
+                    <input type="text" id="invPhone" placeholder="+252..." class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Alaabta / adeegga *</label>
+                <input type="text" id="invItemsDesc" placeholder="Sharaxaad kooban..." class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Subtotal</label>
+                    <input type="number" step="0.01" id="invSubtotal" oninput="calculateInvoiceTotal()" placeholder="0.00" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Canshuur</label>
+                    <input type="number" step="0.01" id="invTax" oninput="calculateInvoiceTotal()" value="0" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Wadarta</label>
+                    <input type="number" step="0.01" id="invTotal" readonly placeholder="0.00" class="w-full p-2.5 bg-slate-100 border rounded-xl text-sm outline-none font-bold text-slate-700">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">La bixiyay</label>
+                    <input type="number" step="0.01" id="invPaid" placeholder="0" class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Xusuusin</label>
+                <input type="text" id="invNote" placeholder="Faahfaahin dheeraad ah..." class="w-full p-2.5 bg-slate-50 border rounded-xl text-sm outline-none">
+            </div>
+
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-3 rounded-xl text-xs font-bold cursor-pointer">Jooji</button>
+                <button onclick="saveInvoiceData()" class="w-1/2 bg-indigo-600 text-white py-3 rounded-xl text-xs font-bold shadow cursor-pointer">Kaydi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="transModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-6 rounded-3xl shadow-xl space-y-4">
+            <h3 id="transModalTitle" class="font-bold text-base text-slate-800 text-center">Dhaqdhaqaaq</h3>
+            <div class="space-y-3">
+                <input type="number" step="0.01" id="transAmount" placeholder="Cadadka Lacagta" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+                <input type="text" id="transNote" placeholder="Faahfaahin" class="w-full p-3 bg-slate-50 border rounded-xl text-sm outline-none">
+            </div>
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-3 rounded-xl text-xs font-bold cursor-pointer">Ka laabo</button>
+                <button onclick="saveTransaction()" class="w-1/2 bg-emerald-700 text-white py-3 rounded-xl text-xs font-bold shadow cursor-pointer">Keydi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modulesConfig = {
+            sales: { title: 'Iibka (Sales)', btnText: '+ KU DAR IIB' },
+            customers: { title: 'Macaamiisha (Customers)', btnText: '+ KU DAR MACMIIL' },
+            order: { title: 'Dalabka (Orders)', btnText: '+ KU DAR DALAB' },
+            companies: { title: 'Shirkadaha (Companies)', btnText: '+ KU DAR SHIRKAD' },
+            products: { title: 'Alaabta (Products)', btnText: '+ KU DAR ALAAB' },
+            cost: { title: 'Kharashaad (Expenses)', btnText: '+ KU DAR KHARASH' },
+            invoices: { title: 'Invoice-yada (Invoices)', btnText: '+ KU DAR INVOICE' },
+            reports: { title: 'Warbixin (Reports)', btnText: '' }
+        };
+
+        let currentModule = null;
+        let activeItemId = null;
+        let activeTransType = 'plus';
+
+        function getStore(mod) {
+            let data = localStorage.getItem('bulsho_' + mod);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveStore(mod, data) {
+            localStorage.setItem('bulsho_' + mod, JSON.stringify(data));
+        }
+
+        function goHome() {
+            currentModule = null;
+            activeItemId = null;
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('moduleView').classList.add('hidden');
+            document.getElementById('reportsView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('headerTitle').innerText = "Bulsho Kaab";
+        }
+
+        function openModule(mod) {
+            currentModule = mod;
+            activeItemId = null;
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            document.getElementById('headerTitle').innerText = modulesConfig[mod].title;
+
+            if (mod === 'reports') {
+                document.getElementById('moduleView').classList.add('hidden');
+                document.getElementById('reportsView').classList.remove('hidden');
+                calculateReports();
+            } else {
+                document.getElementById('reportsView').classList.add('hidden');
+                document.getElementById('moduleView').classList.remove('hidden');
+                document.getElementById('addBtnText').innerHTML = `<span>${modulesConfig[mod].btnText}</span>`;
+                renderModuleData();
+            }
+        }
+
+        function getItemBalance(item) {
+            // For invoices, if amount is stored directly or calculated
+            let baseAmt = parseFloat(item.amount || item.total || 0);
+            if(!item.transactions || item.transactions.length === 0) return baseAmt;
+            return item.transactions.reduce((acc, t) => t.type === 'plus' ? acc + parseFloat(t.amount) : acc - parseFloat(t.amount), baseAmt);
+        }
+
+        function calculateReports() {
+            let salesData = getStore('sales');
+            let orderData = getStore('order');
+            let costData = getStore('cost');
+            let invoiceData = getStore('invoices');
+            let custData = getStore('customers');
+            let compData = getStore('companies');
+
+            let totalSales = salesData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let totalOrders = orderData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let dakhli = totalSales + totalOrders;
+
+            let totalExpense = costData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let netProfit = dakhli - totalExpense;
+
+            let totalInvoices = invoiceData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let custDebt = custData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let compDebt = compData.reduce((acc, i) => acc + getItemBalance(i), 0);
+            let totalDebt = custDebt + compDebt;
+
+            document.getElementById('repSalesVal').innerText = `$${dakhli.toFixed(2)}`;
+            document.getElementById('repExpenseVal').innerText = `$${totalExpense.toFixed(2)}`;
+            document.getElementById('repNetVal').innerText = `$${netProfit.toFixed(2)}`;
+            document.getElementById('repInvoiceVal').innerText = `$${totalInvoices.toFixed(2)}`;
+            document.getElementById('repCustDebtVal').innerText = `$${custDebt.toFixed(2)}`;
+            document.getElementById('repCompDebtVal').innerText = `$${compDebt.toFixed(2)}`;
+            document.getElementById('repTotalDebtVal').innerText = `$${totalDebt.toFixed(2)}`;
+
+            let now = new Date();
+            document.getElementById('reportDateLabel').innerText = `${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        }
+
+        function renderModuleData(filter = '') {
+            const list = document.getElementById('itemsList');
+            let data = getStore(currentModule);
+            let filtered = data.filter(i => (i.name || i.customer || '').toLowerCase().includes(filter.toLowerCase()));
+
+            document.getElementById('itemCount').innerText = filtered.length;
+
+            if(filtered.length === 0) {
+                list.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">Lama helin xog ku jirta</p>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(i => {
+                const displayName = i.name || i.customer || 'Magac La\'aan';
+                const displaySub = i.phone || i.number || i.itemsDesc || '';
+                const bal = getItemBalance(i);
+                return `
+                <div class="bg-white p-4 rounded-2xl border shadow-xs flex justify-between items-center">
+                    <div onclick="openItemDetail(${i.id})" class="flex items-center space-x-3 cursor-pointer flex-grow">
+                        <div class="w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600 text-base">${displayName.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900">${displayName}</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">${displaySub}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div onclick="openItemDetail(${i.id})" class="text-right cursor-pointer">
+                            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">WADARTA</p>
+                            <p class="text-sm font-bold text-indigo-600">$${bal.toFixed(2)}</p>
+                        </div>
+                        <button onclick="deleteItem(${i.id})" class="text-rose-500 text-xs font-bold px-1 py-0.5 cursor-pointer">🗑️</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function filterData() {
+            renderModuleData(document.getElementById('searchBox').value);
+        }
+
+        function openItemDetail(id) {
+            activeItemId = id;
+            const data = getStore(currentModule);
+            const item = data.find(x => x.id === id);
+            if(!item) return;
+
+            document.getElementById('moduleView').classList.add('hidden');
+            document.getElementById('detailView').classList.remove('hidden');
+            document.getElementById('headerTitle').innerText = item.name || item.customer || 'Faahfaahin';
+
+            const bal = getItemBalance(item);
+            document.getElementById('detBalance').innerText = bal.toFixed(2);
+
+            const tList = document.getElementById('detailTransactions');
+            const transactions = item.transactions || [];
+            document.getElementById('transCount').innerText = transactions.length;
+
+            tList.innerHTML = transactions.length === 0 ? '<p class="text-xs text-center text-slate-400 py-4">Wali dhaqdhaqaaq malahan</p>' :
+            transactions.map(t => `
+                <div class="bg-white p-4 rounded-2xl border shadow-xs space-y-1">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-xs font-bold text-slate-500">${t.date}</span>
+                        <span class="font-bold ${t.type === 'plus' ? 'text-indigo-600' : 'text-emerald-600'}">$${parseFloat(t.amount).toFixed(2)}</span>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-800">${t.note}</p>
+                </div>
+            `).reverse().join('');
+        }
+
+        function openAddModal() {
+            if (currentModule === 'invoices') {
+                document.getElementById('invNumber').value = 'INV-00' + (getStore('invoices').length + 1);
+                document.getElementById('invDate').valueAsDate = new Date();
+                document.getElementById('invCustomer').value = '';
+                document.getElementById('invPhone').value = '';
+                document.getElementById('invItemsDesc').value = '';
+                document.getElementById('invSubtotal').value = '';
+                document.getElementById('invTax').value = '0';
+                document.getElementById('invTotal').value = '';
+                document.getElementById('invPaid').value = '';
+                document.getElementById('invNote').value = '';
+                document.getElementById('addInvoiceModal').classList.remove('hidden');
+            } else {
+                document.getElementById('inputName').value = '';
+                document.getElementById('inputPhone').value = '';
+                document.getElementById('inputWhatsapp').value = '';
+                document.getElementById('inputAmount').value = '';
+                document.getElementById('addItemModal').classList.remove('hidden');
+            }
+        }
+
+        function calculateInvoiceTotal() {
+            let sub = parseFloat(document.getElementById('invSubtotal').value) || 0;
+            let tax = parseFloat(document.getElementById('invTax').value) || 0;
+            let total = sub + tax;
+            document.getElementById('invTotal').value = total.toFixed(2);
+        }
+
+        function saveInvoiceData() {
+            let number = document.getElementById('invNumber').value;
+            let date = document.getElementById('invDate').value;
+            let customer = document.getElementById('invCustomer').value;
+            let phone = document.getElementById('invPhone').value;
+            let itemsDesc = document.getElementById('invItemsDesc').value;
+            let subtotal = parseFloat(document.getElementById('invSubtotal').value) || 0;
+            let tax = parseFloat(document.getElementById('invTax').value) || 0;
+            let total = subtotal + tax;
+            let paid = parseFloat(document.getElementById('invPaid').value) || 0;
+            let note = document.getElementById('invNote').value;
+
+            if(!customer) return alert('Fadlan geli magaca macmiilka');
+
+            let data = getStore('invoices');
+            data.push({
+                id: Date.now(),
+                number,
+                date,
+                customer,
+                phone,
+                itemsDesc,
+                subtotal,
+                tax,
+                total,
+                paid,
+                amount: total,
+                transactions: paid > 0 ? [{ type: 'minus', amount: paid, note: 'La bixiyay', date: new Date().toLocaleDateString() }] : []
+            });
+
+            saveStore('invoices', data);
+            closeModals();
+            renderModuleData();
+        }
+
+        function closeModals() {
+            document.getElementById('addItemModal').classList.add('hidden');
+            document.getElementById('addInvoiceModal').classList.add('hidden');
+            document.getElementById('transModal').classList.add('hidden');
+        }
+
+        function saveItemData() {
+            const name = document.getElementById('inputName').value;
+            const phone = document.getElementById('inputPhone').value;
+            const whatsapp = document.getElementById('inputWhatsapp').value;
+            const amount = document.getElementById('inputAmount').value || 0;
+            if(!name) return alert('Fadlan geli magaca');
+
+            const data = getStore(currentModule);
+            data.push({ id: Date.now(), name, phone, whatsapp, amount: parseFloat(amount), transactions: [] });
+            saveStore(currentModule, data);
+            closeModals();
+            renderModuleData();
+        }
+
+        function deleteItem(id) {
+            if(confirm('Ma hubtaa inaad tirtirayso xogtan?')) {
+                let data = getStore(currentModule);
+                saveStore(currentModule, data.filter(x => x.id !== id));
+                renderModuleData();
+            }
+        }
+
+        function openTransModal(type) {
+            activeTransType = type;
+            document.getElementById('transModalTitle').innerText = type === 'plus' ? 'Ku Dar Lacag (+)' : 'Bixi / Jar Lacag (-)';
+            document.getElementById('transAmount').value = '';
+            document.getElementById('transNote').value = '';
+            document.getElementById('transModal').classList.remove('hidden');
+        }
+
+        function saveTransaction() {
+            const amount = document.getElementById('transAmount').value;
+            const note = document.getElementById('transNote').value;
+            if(!amount) return alert('Fadlan geli cadadka lacagta');
+
+            const data = getStore(currentModule);
+            const item = data.find(x => x.id === activeItemId);
+            if(item) {
+                if(!item.transactions) item.transactions = [];
+                let now = new Date();
+                item.transactions.push({
+                    type: activeTransType,
+                    amount: parseFloat(amount),
+                    note: note || (activeTransType === 'plus' ? 'Lacag ku dar' : 'Bixinta lacagta'),
+                    date: now.toLocaleDateString()
+                });
+                saveStore(currentModule, data);
+                closeModals();
+                openItemDetail(activeItemId);
+            }
+        }
+
+        function actionTable() { alert('Jadwalka waa diyaar.'); }
+        function actionPDF() { window.print(); }
+        function actionSMS() { alert('SMS dirista waa diyaar.'); }
+        function actionCall() { alert('Wicitaanka waa diyaar.'); }
+        function actionWhatsApp() { alert('WhatsApp waa diyaar.'); }
+    </script>
+</body>
+</html>
