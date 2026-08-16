@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulsho Kaab Pro</title>
+  <style>
+    :root {
+      --primary-color: #004D40;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #1a1a1a;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--card-bg);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 20px;
+      color: var(--primary-color);
+    }
+    .currency-switcher {
+      display: flex;
+      background: #e9ecef;
+      border-radius: 6px;
+      padding: 3px;
+    }
+    .currency-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .currency-btn.active {
+      background: #00796B;
+      color: white;
+    }
+    .main-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
+      text-align: center;
+    }
+    .app-title {
+      font-size: 28px;
+      color: #004D40;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+    .app-subtitle {
+      color: #6c757d;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding-bottom: 30px;
+    }
+    .module-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .module-card:hover {
+      transform: translateY(-3px);
+    }
+    .icon-box {
+      width: 55px;
+      height: 55px;
+      border-radius: 12px;
+      margin: 0 auto 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #212529;
+      margin: 5px 0;
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+    .open-btn {
+      background: transparent;
+      border: none;
+      color: #00796B;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    /* Card Colors */
+    .c-sales { background: #e8f5e9; color: #2e7d32; }
+    .c-cust { background: #e3f2fd; color: #1565c0; }
+    .c-order { background: #fff8e1; color: #f57c00; }
+    .c-comp { background: #f3e5f5; color: #7b1fa2; }
+    .c-prod { background: #e0f2f1; color: #00695c; }
+    .c-exp { background: #ffebee; color: #c62828; }
+    .c-inv { background: #ede7f6; color: #4527a0; }
+    .c-rep { background: #e1f5fe; color: #0277bd; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <span>📖</span> Bulsho Kaab
+    </div>
+    <div class="currency-switcher">
+      <button class="currency-btn active" onclick="setCurrency('USD')">USD</button>
+      <button class="currency-btn" onclick="setCurrency('SOS')">SOS</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <div class="app-title">Bulsho Kaab Pro</div>
+    <div class="app-subtitle">Doorso qaybta aad rabto · Select a module to get started</div>
+
+    <div class="grid-container">
+      <!-- 1. Iibka -->
+      <div class="module-card">
+        <div class="icon-box c-sales">📈</div>
+        <div class="card-title">Iibka</div>
+        <div class="card-subtitle">Sales</div>
+        <button class="open-btn" onclick="openModule('Iibka')">Open &gt;</button>
+      </div>
+
+      <!-- 2. Macaamiisha -->
+      <div class="module-card">
+        <div class="icon-box c-cust">👥</div>
+        <div class="card-title">Macaamiisha</div>
+        <div class="card-subtitle">Customers</div>
+        <button class="open-btn" onclick="openModule('Macaamiisha')">Open &gt;</button>
+      </div>
+
+      <!-- 3. Dalabka -->
+      <div class="module-card">
+        <div class="icon-box c-order">📋</div>
+        <div class="card-title">Dalabka</div>
+        <div class="card-subtitle">Orders</div>
+        <button class="open-btn" onclick="openModule('Dalabka')">Open &gt;</button>
+      </div>
+
+      <!-- 4. Shirkadaha -->
+      <div class="module-card">
+        <div class="icon-box c-comp">🏢</div>
+        <div class="card-title">Shirkadaha</div>
+        <div class="card-subtitle">Companies</div>
+        <button class="open-btn" onclick="openModule('Shirkadaha')">Open &gt;</button>
+      </div>
+
+      <!-- 5. Alaabta -->
+      <div class="module-card">
+        <div class="icon-box c-prod">📦</div>
+        <div class="card-title">Alaabta</div>
+        <div class="card-subtitle">Products</div>
+        <button class="open-btn" onclick="openModule('Alaabta')">Open &gt;</button>
+      </div>
+
+      <!-- 6. Kharashaad -->
+      <div class="module-card">
+        <div class="icon-box c-exp">📄</div>
+        <div class="card-title">Kharashaad</div>
+        <div class="card-subtitle">Expenses</div>
+        <button class="open-btn" onclick="openModule('Kharashaadka')">Open &gt;</button>
+      </div>
+
+      <!-- 7. Invoice-yada -->
+      <div class="module-card">
+        <div class="icon-box c-inv">📑</div>
+        <div class="card-title">Invoice-yada</div>
+        <div class="card-subtitle">Invoices</div>
+        <button class="open-btn" onclick="openModule('Invoice-yada')">Open &gt;</button>
+      </div>
+
+      <!-- 8. Warbixin -->
+      <div class="module-card">
+        <div class="icon-box c-rep">📊</div>
+        <div class="card-title">Warbixin</div>
+        <div class="card-subtitle">Report</div>
+        <button class="open-btn" onclick="openModule('Warbixinta')">Open &gt;</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setCurrency(curr) {
+      const btns = document.querySelectorAll('.currency-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+    function openModule(name) {
+      alert('Waxaad dooratay qaybta: ' + name);
+    }
+  </script>
+
+</body>
+</html>
