@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white text-slate-900 font-sans pb-24" translate="no">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-100 p-4 sticky top-0 z-50 flex justify-between items-center shadow-xs">
+        <div class="flex items-center space-x-3">
+            <button onclick="goHome()" id="backBtn" class="hidden text-xl font-bold text-emerald-800 cursor-pointer">←</button>
+            <div class="flex items-center space-x-2">
+                <span class="text-emerald-800 font-bold text-xl">📖</span>
+                <h1 id="headerTitle" class="text-lg font-bold text-emerald-900 tracking-tight">Bulsho Kaab</h1>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div class="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs font-bold">
+                <span class="bg-emerald-700 text-white px-2.5 py-1 rounded-md shadow-xs">USD</span>
+                <span class="text-slate-500 px-2.5 py-1">SOS</span>
+            </div>
+            <span class="text-xl font-bold cursor-pointer text-slate-700 p-1">☰</span>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        
+        <!-- Home Dashboard View -->
+        <div id="homeView" class="space-y-6">
+            <div class="text-center pt-2 pb-1">
+                <h2 class="text-2xl font-bold text-emerald-900">Bulsho Kaab Pro</h2>
+                <p class="text-xs text-slate-400 mt-1">Doorso qaybta aad rabto · Select a module to get started</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pb-10">
+                <div onclick="openModule('sales')" class="bg-emerald-50/65 border border-emerald-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📈</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Iibka</h3>
+                        <p class="text-xs text-slate-500 font-medium">Sales</p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Customers Module Button -->
+                <div onclick="openModule('customers')" class="bg-blue-50/65 border border-blue-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">👥</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Macaamiisha</h3>
+                        <p class="text-xs text-slate-500 font-medium">Customers</p>
+                    </div>
+                    <span class="text-xs font-bold text-blue-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('products')" class="bg-cyan-50/65 border border-cyan-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📦</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Alaabta</h3>
+                        <p class="text-xs text-slate-500 font-medium">Products</p>
+                    </div>
+                    <span class="text-xs font-bold text-cyan-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('cost')" class="bg-rose-50/65 border border-rose-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">🧾</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Kharashaad</h3>
+                        <p class="text-xs text-slate-500 font-medium">Expenses</p>
+                    </div>
+                    <span class="text-xs font-bold text-rose-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('invoices')" class="bg-indigo-50/65 border border-indigo-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📄</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Invoice-yada</h3>
+                        <p class="text-xs text-slate-500 font-medium">Invoices</p>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <div onclick="openModule('reports')" class="bg-sky-50/65 border border-sky-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📊</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Warbixin</h3>
+                        <p class="text-xs text-slate-500 font-medium">Report</p>
+                    </div>
+                    <span class="text-xs font-bold text-sky-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Dashboard View -->
+        <div id="customersView" class="hidden space-y-4">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-bold text-blue-900 flex items-center">
+                    <span class="mr-2">👥</span> Macaamiisha
+                </h2>
+                <p class="text-xs text-slate-500 font-medium">Diiwaanka macaamiisha iyo deyntooda</p>
+            </div>
+
+            <!-- Add Customer Button -->
+            <button onclick="openAddCustomerModal()" class="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-bold text-xs shadow-md cursor-pointer hover:bg-blue-700 transition">
+                + MACMIIL CUSUB
+            </button>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-blue-50/60 border border-blue-100 p-4 rounded-2xl shadow-xs space-y-1">
+                    <p class="text-[10px] font-bold text-blue-800 uppercase">WADARTA MACAAMIISHA</p>
+                    <p id="custCountStat" class="text-2xl font-bold text-slate-900">0</p>
+                </div>
+                <div class="bg-amber-50/60 border border-amber-100 p-4 rounded-2xl shadow-xs space-y-1">
+                    <p class="text-[10px] font-bold text-amber-800 uppercase">WADARTA DEYNTA</p>
+                    <p id="custDebtStat" class="text-2xl font-bold text-slate-900">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Search Box -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-2 flex items-center shadow-xs">
+                <span class="text-slate-400 px-2">🔍</span>
+                <input type="text" id="searchCust" oninput="renderCustomerList()" placeholder="Raadi macmiil, telefoon..." class="w-full text-sm outline-none">
+            </div>
+
+            <!-- Table Header / List -->
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+                <div class="grid grid-cols-3 p-3 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase text-center">
+                    <span>MAGACA</span>
+                    <span>TELEFOONKA</span>
+                    <span>DEYNTA</span>
+                </div>
+                <div id="customerTableRows" class="divide-y divide-slate-100">
+                    <p class="text-xs text-center text-slate-400 py-6">Wali lama diiwaangelin macmiil</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoices Dashboard View -->
+        <div id="invoiceView" class="hidden space-y-4">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-bold text-emerald-900 flex items-center">
+                    <span class="mr-2">📄</span> Invoice-yada
+                </h2>
+                <p class="text-xs text-slate-500 font-medium">Biilasha macaamiisha iyo lacag-bixintooda</p>
+            </div>
+
+            <button onclick="openAddInvoiceModal()" class="w-full bg-indigo-600 text-white py-3.5 rounded-2xl font-bold text-xs shadow-md cursor-pointer hover:bg-indigo-700 transition">
+                + INVOICE CUSUB
+            </button>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-indigo-50/60 border border-indigo-100 p-4 rounded-2xl shadow-xs space-y-1">
+                    <p class="text-[10px] font-bold text-indigo-800 uppercase">INVOICE-YADA</p>
+                    <p id="invCountStat" class="text-2xl font-bold text-slate-900">0</p>
+                </div>
+                <div class="bg-amber-50/60 border border-amber-100 p-4 rounded-2xl shadow-xs space-y-1">
+                    <p class="text-[10px] font-bold text-amber-800 uppercase">HARAAGA</p>
+                    <p id="invBalanceStat" class="text-2xl font-bold text-slate-900">$0.00</p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50/60 border border-emerald-100 p-4 rounded-2xl shadow-xs space-y-1">
+                <p class="text-[10px] font-bold text-emerald-800 uppercase">LA BIXIYAY / SUGAYA</p>
+                <p id="invPaidStat" class="text-2xl font-bold text-slate-900">$0.00 / $0.00</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-2 flex items-center shadow-xs">
+                <span class="text-slate-400 px-2">🔍</span>
+                <input type="text" id="searchInv" oninput="renderInvoiceList()" placeholder="Raadi invoice, macmiil..." class="w-full text-sm outline-none">
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+                <div class="grid grid-cols-4 p-3 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase text-center">
+                    <span>INVOICE</span>
+                    <span>MACMIILKA</span>
+                    <span>XAALADA</span>
+                    <span>WADARTA</span>
+                </div>
+                <div id="invoiceTableRows" class="divide-y divide-slate-100">
+                    <p class="text-xs text-center text-slate-400 py-6">Wali lama diiwaangelin invoice</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Module View -->
+        <div id="genericModuleView" class="hidden space-y-3">
+            <div class="bg-white p-3 rounded-2xl border flex items-center shadow-xs">
+                <span class="text-slate-400 mr-2">🔍</span>
+                <input type="text" id="genericSearch" placeholder="Raadi..." class="w-full text-sm outline-none">
+            </div>
+            <div id="genericList" class="space-y-2"></div>
+        </div>
+    </main>
+
+    <!-- Modal for New Customer -->
+    <div id="addCustomerModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-md p-5 rounded-3xl shadow-xl space-y-3 my-auto">
+            <div class="flex justify-between items-center pb-1 border-b">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">👥</span>
+                    <h3 class="font-bold text-base text-slate-900">Macmiil Cusub</h3>
+                </div>
+                <span onclick="closeModals()" class="text-xl font-bold text-slate-400 cursor-pointer">&times;</span>
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Magaca Macmiilka *</label>
+                <input type="text" id="cName" placeholder="Geli magaca buuxa" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Telefoonka *</label>
+                <input type="text" id="cPhone" placeholder="+252..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Deynta Hordhaca ah (Haddii ay jirto)</label>
+                <input type="number" step="0.01" id="cDebt" value="0" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Ciwaanka / Xusuusin</label>
+                <input type="text" id="cNote" placeholder="Tusaale: Suuqa Bakaaraha..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl text-xs font-bold cursor-pointer">Jooji</button>
+                <button onclick="saveNewCustomer()" class="w-1/2 bg-blue-600 text-white py-3 rounded-xl text-xs font-bold shadow cursor-pointer">Kaydi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Invoice -->
+    <div id="addInvoiceModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-md p-5 rounded-3xl shadow-xl space-y-3 my-auto max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-1 border-b">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">📄</span>
+                    <h3 class="font-bold text-base text-slate-900">Invoice Cusub</h3>
+                </div>
+                <span onclick="closeModals()" class="text-xl font-bold text-slate-400 cursor-pointer">&times;</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Lambarka *</label>
+                    <input type="text" id="fNum" value="INV-001" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Taariikhda bixinta</label>
+                    <input type="date" id="fDate" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Macmiilka *</label>
+                    <input type="text" id="fCustomer" placeholder="Magaca macmiilka" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Telefoonka</label>
+                    <input type="text" id="fPhone" placeholder="+252..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Alaabta / adeegga *</label>
+                <input type="text" id="fDesc" placeholder="Sharaxaad kooban..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Subtotal</label>
+                    <input type="number" step="0.01" id="fSubtotal" oninput="calcTotal()" placeholder="0" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Canshuur</label>
+                    <input type="number" step="0.01" id="fTax" oninput="calcTotal()" value="0" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">Wadarta</label>
+                    <input type="number" step="0.01" id="fTotal" readonly placeholder="0" class="w-full p-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm outline-none font-bold text-slate-700">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">La bixiyay</label>
+                    <input type="number" step="0.01" id="fPaid" placeholder="0" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Xusuusin</label>
+                <input type="text" id="fNote" placeholder="Faahfaahin dheeraad ah..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none">
+            </div>
+
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-100 text-slate-700 py-3 rounded-xl text-xs font-bold cursor-pointer">Jooji</button>
+                <button onclick="saveNewInvoice()" class="w-1/2 bg-indigo-600 text-white py-3 rounded-xl text-xs font-bold shadow cursor-pointer">Kaydi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let invoices = JSON.parse(localStorage.getItem('bulsho_invoices')) || [];
+        let customers = JSON.parse(localStorage.getItem('bulsho_customers')) || [];
+
+        function goHome() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('customersView').classList.add('hidden');
+            document.getElementById('invoiceView').classList.add('hidden');
+            document.getElementById('genericModuleView').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('headerTitle').innerText = "Bulsho Kaab";
+        }
+
+        function openModule(mod) {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+
+            if(mod === 'invoices') {
+                document.getElementById('invoiceView').classList.remove('hidden');
+                document.getElementById('customersView').classList.add('hidden');
+                document.getElementById('genericModuleView').classList.add('hidden');
+                document.getElementById('headerTitle').innerText = "Invoice-yada";
+                renderInvoiceList();
+            } else if(mod === 'customers') {
+                document.getElementById('customersView').classList.remove('hidden');
+                document.getElementById('invoiceView').classList.add('hidden');
+                document.getElementById('genericModuleView').classList.add('hidden');
+                document.getElementById('headerTitle').innerText = "Macaamiisha";
+                renderCustomerList();
+            } else {
+                document.getElementById('invoiceView').classList.add('hidden');
+                document.getElementById('customersView').classList.add('hidden');
+                document.getElementById('genericModuleView').classList.remove('hidden');
+                document.getElementById('headerTitle').innerText = mod.toUpperCase();
+                document.getElementById('genericList').innerHTML = `<p class="text-xs text-center text-slate-400 py-6">Qeybtan waa diyaar</p>`;
+            }
+        }
+
+        // Customer Logic
+        function openAddCustomerModal() {
+            document.getElementById('cName').value = '';
+            document.getElementById('cPhone').value = '';
+            document.getElementById('cDebt').value = '0';
+            document.getElementById('cNote').value = '';
+            document.getElementById('addCustomerModal').classList.remove('hidden');
+        }
+
+        function saveNewCustomer() {
+            let name = document.getElementById('cName').value;
+            let phone = document.getElementById('cPhone').value;
+            let debt = parseFloat(document.getElementById('cDebt').value) || 0;
+            let note = document.getElementById('cNote').value;
+
+            if(!name || !phone) return alert('Fadlan buuxi magaca iyo telefoonka');
+
+            customers.push({ name, phone, debt, note });
+            localStorage.setItem('bulsho_customers', JSON.stringify(customers));
+            closeModals();
+            renderCustomerList();
+        }
+
+        function renderCustomerList() {
+            const search = document.getElementById('searchCust').value.toLowerCase();
+            const rows = document.getElementById('customerTableRows');
+            const filtered = customers.filter(c => c.name.toLowerCase().includes(search) || c.phone.toLowerCase().includes(search));
+
+            document.getElementById('custCountStat').innerText = customers.length;
+            let totalDebt = customers.reduce((acc, c) => acc + c.debt, 0);
+            document.getElementById('custDebtStat').innerText = `$${totalDebt.toFixed(2)}`;
+
+            if(filtered.length === 0) {
+                rows.innerHTML = `<p class="text-xs text-center text-slate-400 py-6">Lama helin macmiil diiwaangashan</p>`;
+                return;
+            }
+
+            rows.innerHTML = filtered.map(c => `
+                <div class="grid grid-cols-3 p-3 text-xs text-center items-center">
+                    <span class="font-bold text-slate-900">${c.name}</span>
+                    <span class="text-slate-600">${c.phone}</span>
+                    <span class="font-bold text-amber-600">$${c.debt.toFixed(2)}</span>
+                </div>
+            `).join('');
+        }
+
+        // Invoice Logic
+        function openAddInvoiceModal() {
+            document.getElementById('fNum').value = 'INV-00' + (invoices.length + 1);
+            document.getElementById('fDate').valueAsDate = new Date();
+            document.getElementById('fCustomer').value = '';
+            document.getElementById('fPhone').value = '';
+            document.getElementById('fDesc').value = '';
+            document.getElementById('fSubtotal').value = '';
+            document.getElementById('fTax').value = '0';
+            document.getElementById('fTotal').value = '';
+            document.getElementById('fPaid').value = '';
+            document.getElementById('fNote').value = '';
+            document.getElementById('addInvoiceModal').classList.remove('hidden');
+        }
+
+        function closeModals() {
+            document.getElementById('addCustomerModal').classList.add('hidden');
+            document.getElementById('addInvoiceModal').classList.add('hidden');
+        }
+
+        function calcTotal() {
+            let sub = parseFloat(document.getElementById('fSubtotal').value) || 0;
+            let tax = parseFloat(document.getElementById('fTax').value) || 0;
+            document.getElementById('fTotal').value = (sub + tax).toFixed(2);
+        }
+
+        function saveNewInvoice() {
+            let num = document.getElementById('fNum').value;
+            let date = document.getElementById('fDate').value;
+            let customer = document.getElementById('fCustomer').value;
+            let phone = document.getElementById('fPhone').value;
+            let desc = document.getElementById('fDesc').value;
+            let subtotal = parseFloat(document.getElementById('fSubtotal').value) || 0;
+            let tax = parseFloat(document.getElementById('fTax').value) || 0;
+            let total = subtotal + tax;
+            let paid = parseFloat(document.getElementById('fPaid').value) || 0;
+            let note = document.getElementById('fNote').value;
+
+            if(!customer) return alert('Fadlan geli magaca macmiilka');
+
+            let status = paid >= total && total > 0 ? 'La bixiyay' : 'Sugaya';
+
+            invoices.push({ num, date, customer, phone, desc, total, paid, status });
+            localStorage.setItem('bulsho_invoices', JSON.stringify(invoices));
+            closeModals();
+            renderInvoiceList();
+        }
+
+        function renderInvoiceList() {
+            const search = document.getElementById('searchInv').value.toLowerCase();
+            const rows = document.getElementById('invoiceTableRows');
+            const filtered = invoices.filter(i => i.customer.toLowerCase().includes(search) || i.num.toLowerCase().includes(search));
+
+            document.getElementById('invCountStat').innerText = invoices.length;
+            let totalBal = invoices.reduce((acc, i) => acc + (i.total - i.paid), 0);
+            document.getElementById('invBalanceStat').innerText = `$${totalBal.toFixed(2)}`;
+
+            let totalPaid = invoices.reduce((acc, i) => acc + i.paid, 0);
+            let totalPending = invoices.reduce((acc, i) => acc + (i.total - i.paid > 0 ? i.total - i.paid : 0), 0);
+            document.getElementById('invPaidStat').innerText = `$${totalPaid.toFixed(2)} / $${totalPending.toFixed(2)}`;
+
+            if(filtered.length === 0) {
+                rows.innerHTML = `<p class="text-xs text-center text-slate-400 py-6">Lama helin invoice ku jira</p>`;
+                return;
+            }
+
+            rows.innerHTML = filtered.map(i => `
+                <div class="grid grid-cols-4 p-3 text-xs text-center items-center">
+                    <span class="font-bold text-slate-700">${i.num}</span>
+                    <span class="font-semibold text-slate-900">${i.customer}</span>
+                    <span class="${i.status === 'La bixiyay' ? 'text-emerald-600' : 'text-amber-600'} font-bold">${i.status}</span>
+                    <span class="font-bold text-slate-900">$${i.total.toFixed(2)}</span>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
