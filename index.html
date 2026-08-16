@@ -1,0 +1,60 @@
+void _showAddProductDialog(BuildContext context) {
+  final nameController = TextEditingController();
+  final costPriceController = TextEditingController();
+  final sellingPriceController = TextEditingController();
+  final unitController = TextEditingController();
+  final stockController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Ku dar: Alaabta (Products)"),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: 'Magaca Alaabta'),
+              ),
+              TextField(
+                controller: costPriceController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Qiimaha la Iibsaday ($) - Cost Price'),
+              ),
+              TextField(
+                controller: sellingPriceController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Qiimaha Iibka ($) - Selling Price'),
+              ),
+              TextField(
+                controller: unitController,
+                decoration: InputDecoration(labelText: 'Nooca Halbeegga (Tusaale: Xabbo, Box, Kg)'),
+              ),
+              TextField(
+                controller: stockController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Tirada Bakhaarka'),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Ka laabo'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF00796B)),
+            onPressed: () {
+              // Halkan geli logic-ga xogta lagu kaydinayo
+              Navigator.pop(context);
+            },
+            child: Text('Keydi', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      );
+    },
+  );
+}
