@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Books</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-16">
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <button onclick="goHome()" id="backBtn" class="hidden text-xl">←</button>
+            <h1 id="headerTitle" class="text-lg font-bold">Bulsho Kaab Books</h1>
+        </div>
+        <div class="bg-emerald-800 p-1 rounded-lg flex text-xs font-semibold">
+            <button onclick="setCurrency('USD')" id="currUSD" class="px-2 py-1 bg-white text-emerald-800 rounded shadow">USD</button>
+            <button onclick="setCurrency('SOS')" id="currSOS" class="px-2 py-1 text-white">SOS</button>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        <!-- Home Dashboard Grid -->
+        <div id="homeView" class="grid grid-cols-2 gap-3">
+            <div onclick="openModule('sales')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-blue-600">📄</div>
+                <h3 class="font-bold text-sm text-slate-700">Sales</h3>
+            </div>
+            <div onclick="openModule('customers')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-emerald-600">👥</div>
+                <h3 class="font-bold text-sm text-slate-700">Customers</h3>
+            </div>
+            <div onclick="openModule('order')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-purple-600">📋</div>
+                <h3 class="font-bold text-sm text-slate-700">Order</h3>
+            </div>
+            <div onclick="openModule('companies')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-purple-800">🏢</div>
+                <h3 class="font-bold text-sm text-slate-700">Companies</h3>
+            </div>
+            <div onclick="openModule('products')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-amber-600">📦</div>
+                <h3 class="font-bold text-sm text-slate-700">Products</h3>
+            </div>
+            <div onclick="openModule('cost')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-rose-600">🧾</div>
+                <h3 class="font-bold text-sm text-slate-700">Cost</h3>
+            </div>
+            <div onclick="openModule('cash')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-blue-800">📖</div>
+                <h3 class="font-bold text-sm text-slate-700">Cash</h3>
+            </div>
+            <div onclick="openModule('account')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-emerald-800">🏦</div>
+                <h3 class="font-bold text-sm text-slate-700">Account</h3>
+            </div>
+        </div>
+
+        <!-- Dynamic Generic Module View (Used for all 8 modules) -->
+        <div id="moduleView" class="hidden space-y-3">
+            <div class="bg-white p-3 rounded-xl border flex items-center shadow-xs">
+                <span class="text-slate-400 mr-2">🔍</span>
+                <input type="text" id="searchBox" placeholder="Raadi..." oninput="filterData()" class="w-full text-sm outline-none">
+            </div>
+            <div class="flex justify-between items-center px-1">
+                <span id="moduleCountText" class="text-xs font-bold text-slate-500 uppercase">Liiska <span id="itemCount">0</span></span>
+            </div>
+            <div id="itemsList" class="space-y-2"></div>
+            
+            <button onclick="openAddModal()" class="fixed bottom-5 right-5 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg font-bold text-sm flex items-center space-x-1 z-40">
+                <span id="addBtnText">+ KU DAR CUSUB</span>
+            </button>
+        </div>
+
+        <!-- Single Item Detail View (For Customers or detailed records) -->
+        <div id="detailView" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2">
+                <h3 id="detTitle" class="font-bold text-base text-slate-800">Magaca</h3>
+                <p id="detSub" class="text-xs text-slate-400"></p>
+                <div class="pt-2 border-t flex justify-between items-center">
+                    <div>
+                        <p id="detBalanceLabel" class="text-[10px] text-slate-400 uppercase font-bold">Wadarta / Haraaga</p>
+                        <p id="detBalance" class="text-lg font-bold text-rose-600">USD 0</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xs font-bold text-slate-500 uppercase">Dhaqdhaqaaqa</h3>
+            <div id="detailTransactions" class="space-y-2"></div>
+
+            <div id="detailActions" class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 max-w-md mx-auto grid grid-cols-2 gap-2 shadow-lg z-40">
+                <button onclick="openTransModal('plus')" class="bg-rose-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">KU DAR (+)</button>
+                <button onclick="openTransModal('minus')" class="bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">JAR (-)</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Add Item -->
+    <div id="addItemModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-5 rounded-2xl shadow-xl space-y-3">
+            <h3 id="modalTitle" class="font-bold text-sm text-slate-800">Ku Dar Cusub</h3>
+            <input type="text" id="inputName" placeholder="Magaca / Faahfaahinta" class="w-full p-2.5 border rounded-xl text-sm">
+            <input type="text" id="inputExtra" placeholder="Teleefanka / Lambar / Qoraal" class="w-full p-2.5 border rounded-xl text-sm">
+            <input type="number" step="0.01" id="inputAmount" placeholder="Lacagta (Haddii ay jirto)" class="w-full p-2.5 border rounded-xl text-sm">
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-2 rounded-xl text-xs font-bold">Ka laabo</button>
+                <button onclick="saveNewItem()" class="w-1/2 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold">Kaydi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Transaction / Sub-record -->
+    <div id="transModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-5 rounded-2xl shadow-xl space-y-3">
+            <h3 id="transModalTitle" class="font-bold text-sm text-slate-800">Dhaqdhaqaaq Ku Dar</h3>
+            <input type="number" step="0.01" id="transAmount" placeholder="Cadadka Lacagta" class="w-full p-2.5 border rounded-xl text-sm">
+            <input type="text" id="transNote" placeholder="Faahfaahin (tusaale: Alaab, Omo...)" class="w-full p-2.5 border rounded-xl text-sm">
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-2 rounded-xl text-xs font-bold">Ka laabo</button>
+                <button onclick="saveTransaction()" class="w-1/2 bg-blue-600 text-white py-2 rounded-xl text-xs font-bold">Keydi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data stores for all 8 modules
+        const modulesConfig = {
+            sales: { title: 'Sales', nameKey: 'Macmiil / Faahfaahin', defaultData: [{ id: 1, name: 'Iibka Dukaan - Guud', extra: '0615000000', amount: 120, transactions: [] }] },
+            customers: { title: 'Customers', nameKey: 'Macmiil', defaultData: [{ id: 1, name: 'Cabdi kariin (Coofey)', extra: '0615582717', amount: 244.35, transactions: [{type:'plus', amount: 244.35, note:'Deyntii Guud', date:'Aug 7, 2026'}] }] },
+            order: { title: 'Order', nameKey: 'Dalabka', defaultData: [{ id: 1, name: 'Dalabka Shirkadda CocaCola', extra: 'Pending', amount: 500, transactions: [] }] },
+            companies: { title: 'Companies', nameKey: 'Shirkadda', defaultData: [{ id: 1, name: 'Hays Ku Injineering', extra: '0615111222', amount: 0, transactions: [] }] },
+            products: { title: 'Products', nameKey: 'Badeecadda', defaultData: [{ id: 1, name: 'Bariis 25kg', extra: 'Stock: 40', amount: 30, transactions: [] }] },
+            cost: { title: 'Cost', nameKey: 'Kharashka', defaultData: [{ id: 1, name: 'Koronto & Biyo', extra: 'Monthly', amount: 80, transactions: [] }] },
+            cash: { title: 'Cash', nameKey: 'Kaashka Gacanta', defaultData: [{ id: 1, name: 'Lacagta Haysa Sanduuqa', extra: 'Drawer 1', amount: 450, transactions: [] }] },
+            account: { title: 'Account', nameKey: 'Akoonka Bankiga', defaultData: [{ id: 1, name: 'Premier Bank / Salaam', extra: 'Main Acc', amount: 1250, transactions: [] }] }
+        };
+
+        let currentModule = null;
+        let curr = 'USD';
+        let activeItemId = null;
+        let activeTransType = 'plus';
+
+        function getStore(mod) {
+            let data = localStorage.getItem('bulsho_' + mod);
+            if(!data) {
+                data = JSON.stringify(modulesConfig[mod].defaultData);
+                localStorage.setItem('bulsho_' + mod, data);
+            }
+            return JSON.parse(data);
+        }
+
+        function saveStore(mod, data) {
+            localStorage.setItem('bulsho_' + mod, JSON.stringify(data));
+        }
+
+        function setCurrency(c) {
+            curr = c;
+            document.getElementById('currUSD').className = c === 'USD' ? 'px-2 py-1 bg-white text-emerald-800 rounded shadow' : 'px-2 py-1 text-white';
+            document.getElementById('currSOS').className = c === 'SOS' ? 'px-2 py-1 bg-white text-emerald-800 rounded shadow' : 'px-2 py-1 text-white';
+            if(currentModule) renderModuleData();
+            if(activeItemId !== null) openItemDetail(activeItemId);
+        }
+
+        function goHome() {
+            currentModule = null;
+            activeItemId = null;
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('moduleView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('headerTitle').innerText = "Bulsho Kaab Books";
+        }
+
+        function openModule(mod) {
+            currentModule = mod;
+            activeItemId = null;
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('moduleView').classList.remove('hidden');
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            document.getElementById('headerTitle').innerText = modulesConfig[mod].title;
+            document.getElementById('searchBox').value = '';
+            renderModuleData();
+        }
+
+        function getItemBalance(item) {
+            if(!item.transactions || item.transactions.length === 0) return parseFloat(item.amount || 0);
+            return item.transactions.reduce((acc, t) => t.type === 'plus' ? acc + parseFloat(t.amount) : acc - parseFloat(t.amount), parseFloat(item.amount || 0));
+        }
+
+        function renderModuleData(filter = '') {
+            const list = document.getElementById('itemsList');
+            const data = getStore(currentModule);
+            const filtered = data.filter(i => i.name.toLowerCase().includes(filter.toLowerCase()));
+            document.getElementById('itemCount').innerText = data.length;
+
+            if(filtered.length === 0) {
+                list.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">Lama helin xog ku jirta</p>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(i => {
+                const bal = getItemBalance(i);
+                return `
+                <div onclick="openItemDetail(${i.id})" class="bg-white p-3 rounded-2xl border shadow-xs cursor-pointer flex justify-between items-center hover:bg-slate-50">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600">${i.name.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">${i.name}</h4>
+                            <p class="text-xs text-slate-400">${i.extra || ''}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-slate-400">Wadarta</p>
+                        <p class="text-sm font-bold text-emerald-700">${curr} ${bal.toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function filterData() {
+            const query = document.getElementById('searchBox').value;
+            renderModuleData(query);
+        }
+
+        function openItemDetail(id) {
+            activeItemId = id;
+            const data = getStore(currentModule);
+            const item = data.find(x => x.id === id);
+            if(!item) return;
+
+            document.getElementById('moduleView').classList.add('hidden');
+            document.getElementById('detailView').classList.remove('hidden');
+            document.getElementById('headerTitle').innerText = item.name;
+
+            document.getElementById('detTitle').innerText = item.name;
+            document.getElementById('detSub').innerText = item.extra || '';
+            const bal = getItemBalance(item);
+            document.getElementById('detBalance').innerText = `${curr} ${bal.toFixed(2)}`;
+
+            const tList = document.getElementById('detailTransactions');
+            if(!item.transactions || item.transactions.length === 0) {
+                tList.innerHTML = '<p class="text-xs text-center text-slate-400 py-4">Wali dhaqdhaqaaq malahan</p>';
+                return;
+            }
+
+            tList.innerHTML = item.transactions.map((t, idx) => `
+                <div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm shadow-xs">
+                    <div>
+                        <p class="text-xs text-slate-400">${t.date}</p>
+                        <p class="font-bold text-slate-700">${t.note || 'Dhaqdhaqaaq'}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold ${t.type === 'plus' ? 'text-rose-600' : 'text-emerald-600'}">${t.type === 'plus' ? '+' : '-'} ${curr} ${parseFloat(t.amount).toFixed(2)}</p>
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = `Ku Dar ${modulesConfig[currentModule].title}`;
+            document.getElementById('inputName').value = '';
+            document.getElementById('inputExtra').value = '';
+            document.getElementById('inputAmount').value = '';
+            document.getElementById('addItemModal').classList.remove('hidden');
+        }
+
+        function closeModals() {
+            document.getElementById('addItemModal').classList.add('hidden');
+            document.getElementById('transModal').classList.add('hidden');
+        }
+
+        function saveNewItem() {
+            const name = document.getElementById('inputName').value;
+            const extra = document.getElementById('inputExtra').value;
+            const amount = document.getElementById('inputAmount').value || 0;
+            if(!name) return alert('Fadlan geli magaca');
+
+            const data = getStore(currentModule);
+            data.push({
+                id: Date.now(),
+                name,
+                extra,
+                amount: parseFloat(amount),
+                transactions: []
+            });
+            saveStore(currentModule, data);
+            closeModals();
+            renderModuleData();
+        }
+
+        function openTransModal(type) {
+            activeTransType = type;
+            document.getElementById('transModalTitle').innerText = type === 'plus' ? 'Ku Dar (+)' : 'Jar (-)';
+            document.getElementById('transAmount').value = '';
+            document.getElementById('transNote').value = '';
+            document.getElementById('transModal').classList.remove('hidden');
+        }
+
+        function saveTransaction() {
+            const amount = document.getElementById('transAmount').value;
+            const note = document.getElementById('transNote').value;
+            if(!amount) return alert('Fadlan geli cadadka lacagta');
+
+            const data = getStore(currentModule);
+            const item = data.find(x => x.id === activeItemId);
+            if(item) {
+                if(!item.transactions) item.transactions = [];
+                item.transactions.push({
+                    type: activeTransType,
+                    amount: parseFloat(amount),
+                    note: note || (activeTransType === 'plus' ? 'Ku daris' : 'Jarid'),
+                    date: new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})
+                });
+                saveStore(currentModule, data);
+                closeModals();
+                openItemDetail(activeItemId);
+            }
+        }
+    </script>
+</body>
+</html>
