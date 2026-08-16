@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Books</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-16">
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <button onclick="goHome()" id="backBtn" class="hidden text-xl">←</button>
+            <h1 id="headerTitle" class="text-lg font-bold">Bulsho Kaab Books</h1>
+        </div>
+        <div class="bg-emerald-800 p-1 rounded-lg flex text-xs font-semibold">
+            <button onclick="setCurrency('USD')" id="currUSD" class="px-2 py-1 bg-white text-emerald-800 rounded shadow">USD</button>
+            <button onclick="setCurrency('SOS')" id="currSOS" class="px-2 py-1 text-white">SOS</button>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        <!-- Home Dashboard Grid -->
+        <div id="homeView" class="grid grid-cols-2 gap-3">
+            <div onclick="openSection('sales')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-blue-600">📄</div>
+                <h3 class="font-bold text-sm text-slate-700">Sales</h3>
+            </div>
+            <div onclick="openSection('customers')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-emerald-600">👥</div>
+                <h3 class="font-bold text-sm text-slate-700">Customers</h3>
+            </div>
+            <div onclick="openSection('generic', 'Order')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-purple-600">📋</div>
+                <h3 class="font-bold text-sm text-slate-700">Order</h3>
+            </div>
+            <div onclick="openSection('generic', 'Companies')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-purple-800">🏢</div>
+                <h3 class="font-bold text-sm text-slate-700">Companies</h3>
+            </div>
+            <div onclick="openSection('generic', 'Products')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-amber-600">📦</div>
+                <h3 class="font-bold text-sm text-slate-700">Products</h3>
+            </div>
+            <div onclick="openSection('generic', 'Cost')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-rose-600">🧾</div>
+                <h3 class="font-bold text-sm text-slate-700">Cost</h3>
+            </div>
+            <div onclick="openSection('generic', 'Cash')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-blue-800">📖</div>
+                <h3 class="font-bold text-sm text-slate-700">Cash</h3>
+            </div>
+            <div onclick="openSection('generic', 'Account')" class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm cursor-pointer text-center hover:bg-slate-50 transition">
+                <div class="text-2xl mb-1 text-emerald-800">🏦</div>
+                <h3 class="font-bold text-sm text-slate-700">Account</h3>
+            </div>
+        </div>
+
+        <!-- Customers List View -->
+        <div id="customersView" class="hidden space-y-3">
+            <div class="bg-white p-3 rounded-xl border flex items-center shadow-xs">
+                <span class="text-slate-400 mr-2">🔍</span>
+                <input type="text" id="searchCust" placeholder="Raadi Macmiil..." oninput="filterCustomers()" class="w-full text-sm outline-none">
+            </div>
+            <div class="flex justify-between items-center px-1">
+                <span class="text-xs font-bold text-slate-500 uppercase">Macmiil <span id="custCount">0</span></span>
+            </div>
+            <div id="customersList" class="space-y-2"></div>
+            
+            <button onclick="openAddCustomerModal()" class="fixed bottom-5 right-5 bg-cyan-500 text-white px-4 py-3 rounded-full shadow-lg font-bold text-sm flex items-center space-x-1 z-40">
+                <span>+ KU DAR MACMIIL</span>
+            </button>
+        </div>
+
+        <!-- Single Customer Detail View -->
+        <div id="customerDetailView" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl border shadow-sm space-y-2">
+                <h3 id="detCustName" class="font-bold text-base text-slate-800">Magaca Macmiilka</h3>
+                <p id="detCustPhone" class="text-xs text-slate-400">0615000000</p>
+                <div class="pt-2 border-t flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Haraa aad ku leedahay</p>
+                        <p id="detCustBalance" class="text-lg font-bold text-rose-600">USD 0</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xs font-bold text-slate-500 uppercase">Dhaqdhaqaaqa</h3>
+            <div id="customerTransactions" class="space-y-2"></div>
+
+            <!-- Bottom Action Buttons for Debt -->
+            <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 max-w-md mx-auto grid grid-cols-2 gap-2 shadow-lg z-40">
+                <button onclick="openTransModal('plus')" class="bg-rose-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">DEYN KU QOR (+)</button>
+                <button onclick="openTransModal('minus')" class="bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">DEYN KA JAR (-)</button>
+            </div>
+        </div>
+
+        <!-- Generic Placeholder Section -->
+        <div id="sectionGeneric" class="hidden space-y-4 text-center py-10">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-2">
+                <div class="text-3xl">🚧</div>
+                <h3 id="genericTitle" class="font-bold text-slate-700">Qaybtan</h3>
+                <p class="text-xs text-slate-400">Waa la dhisayaa, waxyar ayay ku soo kordhaysaa!</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Add Customer -->
+    <div id="addCustModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-5 rounded-2xl shadow-xl space-y-3">
+            <h3 class="font-bold text-sm text-slate-800">Ku Dar Macmiil Cusub</h3>
+            <input type="text" id="newCustName" placeholder="Magaca Macmiilka" class="w-full p-2.5 border rounded-xl text-sm">
+            <input type="text" id="newCustPhone" placeholder="Teleefanka (Tusaale: 0615...)" class="w-full p-2.5 border rounded-xl text-sm">
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-2 rounded-xl text-xs font-bold">Ka laabo</button>
+                <button onclick="saveNewCustomer()" class="w-1/2 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold">Kaydi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Transaction -->
+    <div id="transModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm p-5 rounded-2xl shadow-xl space-y-3">
+            <h3 id="transModalTitle" class="font-bold text-sm text-slate-800">Deyn Ku Qor</h3>
+            <input type="number" step="0.01" id="transAmount" placeholder="Cadadka Lacagta" class="w-full p-2.5 border rounded-xl text-sm">
+            <input type="text" id="transNote" placeholder="Faahfaahin (tusaale: Bariis, Omo...)" class="w-full p-2.5 border rounded-xl text-sm">
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeModals()" class="w-1/2 bg-slate-200 text-slate-700 py-2 rounded-xl text-xs font-bold">Ka laabo</button>
+                <button onclick="saveTransaction()" class="w-1/2 bg-blue-600 text-white py-2 rounded-xl text-xs font-bold">Keydi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let customers = JSON.parse(localStorage.getItem('bulsho_customers')) || [
+            { id: 1, name: 'Cabdi kariin (Coofey) mako b15', phone: '0615582717', transactions: [{type: 'plus', amount: 244.35, note: 'Deyntii Guud', date: 'Aug 7, 2026'}] },
+            { id: 2, name: 'Abshir ugees', phone: '0618453662', transactions: [{type: 'plus', amount: 13.00, note: 'Badeecad', date: 'Aug 7, 2026'}] },
+            { id: 3, name: 'Auuubakar', phone: '0615190641', transactions: [{type: 'plus', amount: 60.10, note: 'Deyn', date: 'Aug 7, 2026'}] }
+        ];
+        let curr = 'USD';
+        let activeCustId = null;
+        let activeTransType = 'plus';
+
+        function setCurrency(c) {
+            curr = c;
+            document.getElementById('currUSD').className = c === 'USD' ? 'px-2 py-1 bg-white text-emerald-800 rounded shadow' : 'px-2 py-1 text-white';
+            document.getElementById('currSOS').className = c === 'SOS' ? 'px-2 py-1 bg-white text-emerald-800 rounded shadow' : 'px-2 py-1 text-white';
+            renderCustomers();
+            if(activeCustId !== null) openCustomerDetail(activeCustId);
+        }
+
+        function goHome() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('customersView').classList.add('hidden');
+            document.getElementById('customerDetailView').classList.add('hidden');
+            document.getElementById('sectionGeneric').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('headerTitle').innerText = "Bulsho Kaab Books";
+            activeCustId = null;
+        }
+
+        function openSection(sec, title = '') {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            
+            if(sec === 'customers') {
+                document.getElementById('customersView').classList.remove('hidden');
+                document.getElementById('headerTitle').innerText = "Macaamiisha";
+                renderCustomers();
+            } else if(sec === 'sales') {
+                document.getElementById('sectionGeneric').classList.remove('hidden');
+                document.getElementById('genericTitle').innerText = "Maamulka Iibka";
+                document.getElementById('headerTitle').innerText = "Sales";
+            } else {
+                document.getElementById('sectionGeneric').classList.remove('hidden');
+                document.getElementById('genericTitle').innerText = title;
+                document.getElementById('headerTitle').innerText = title;
+            }
+        }
+
+        function getCustomerBalance(c) {
+            return c.transactions.reduce((acc, t) => t.type === 'plus' ? acc + parseFloat(t.amount) : acc - parseFloat(t.amount), 0);
+        }
+
+        function renderCustomers(filter = '') {
+            const list = document.getElementById('customersList');
+            const filtered = customers.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()));
+            document.getElementById('custCount').innerText = customers.length;
+
+            if(filtered.length === 0) {
+                list.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">Lama helin macmiil</p>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(c => {
+                const bal = getCustomerBalance(c);
+                return `
+                <div onclick="openCustomerDetail(${c.id})" class="bg-white p-3 rounded-2xl border shadow-xs cursor-pointer flex justify-between items-center hover:bg-slate-50">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">${c.name.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">${c.name}</h4>
+                            <p class="text-xs text-slate-400">${c.phone}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-slate-400">Xisaabta Deynta</p>
+                        <p class="text-sm font-bold text-rose-600">${curr} ${bal.toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function filterCustomers() {
+            const query = document.getElementById('searchCust').value;
+            renderCustomers(query);
+        }
+
+        function openCustomerDetail(id) {
+            activeCustId = id;
+            const c = customers.find(x => x.id === id);
+            if(!c) return;
+
+            document.getElementById('customersView').classList.add('hidden');
+            document.getElementById('customerDetailView').classList.remove('hidden');
+            document.getElementById('headerTitle').innerText = c.name;
+
+            document.getElementById('detCustName').innerText = c.name;
+            document.getElementById('detCustPhone').innerText = c.phone || '';
+            const bal = getCustomerBalance(c);
+            document.getElementById('detCustBalance').innerText = `${curr} ${bal.toFixed(2)}`;
+
+            const tList = document.getElementById('customerTransactions');
+            if(c.transactions.length === 0) {
+                tList.innerHTML = '<p class="text-xs text-center text-slate-400 py-4">Wali dhaqdhaqaaq malahan</p>';
+                return;
+            }
+
+            tList.innerHTML = c.transactions.map((t, idx) => `
+                <div class="bg-white p-3 rounded-xl border flex justify-between items-center text-sm shadow-xs">
+                    <div>
+                        <p class="text-xs text-slate-400">${t.date}</p>
+                        <p class="font-bold text-slate-700">${t.note || (t.type === 'plus' ? 'Deyn Ku Qor' : 'Deyn Ka Jar')}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold ${t.type === 'plus' ? 'text-rose-600' : 'text-emerald-600'}">${t.type === 'plus' ? '+' : '-'} ${curr} ${parseFloat(t.amount).toFixed(2)}</p>
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+
+        function openAddCustomerModal() {
+            document.getElementById('addCustModal').classList.remove('hidden');
+        }
+
+        function closeModals() {
+            document.getElementById('addCustModal').classList.add('hidden');
+            document.getElementById('transModal').classList.add('hidden');
+        }
+
+        function saveNewCustomer() {
+            const name = document.getElementById('newCustName').value;
+            const phone = document.getElementById('newCustPhone').value;
+            if(!name) return alert('Fadlan geli magaca macmiilka');
+
+            customers.push({ id: Date.now(), name, phone, transactions: [] });
+            localStorage.setItem('bulsho_customers', JSON.stringify(customers));
+            document.getElementById('newCustName').value = '';
+            document.getElementById('newCustPhone').value = '';
+            closeModals();
+            renderCustomers();
+        }
+
+        function openTransModal(type) {
+            activeTransType = type;
+            document.getElementById('transModalTitle').innerText = type === 'plus' ? 'Deyn Ku Qor (+)' : 'Deyn Ka Jar (-)';
+            document.getElementById('transAmount').value = '';
+            document.getElementById('transNote').value = '';
+            document.getElementById('transModal').classList.remove('hidden');
+        }
+
+        function saveTransaction() {
+            const amount = document.getElementById('transAmount').value;
+            const note = document.getElementById('transNote').value;
+            if(!amount) return alert('Fadlan geli cadadka lacagta');
+
+            const c = customers.find(x => x.id === activeCustId);
+            if(c) {
+                c.transactions.push({
+                    type: activeTransType,
+                    amount: parseFloat(amount),
+                    note: note || (activeTransType === 'plus' ? 'Deyn' : 'Lacag bixin'),
+                    date: new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})
+                });
+                localStorage.setItem('bulsho_customers', JSON.stringify(customers));
+                closeModals();
+                openCustomerDetail(activeCustId);
+            }
+        }
+    </script>
+</body>
+</html>
