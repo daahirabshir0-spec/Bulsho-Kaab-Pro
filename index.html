@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulsho Kaab Pro - Supermarket Management</title>
+  <style>
+    :root {
+      --primary-color: #00796B;
+      --primary-dark: #004D40;
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: var(--primary-dark);
+    }
+    /* Modal / Form Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .btn-cancel {
+      background-color: #gray;
+      background: #757575;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Bulsho Kaab Pro</h1>
+    <p>Nidaamka Maamulka Bakhaarka & Dukaanada</p>
+  </header>
+
+  <div class="container">
+    <div class="card-grid">
+      <!-- Qaybta Alaabta -->
+      <div class="card">
+        <h3>Alaabta (Products)</h3>
+        <p>Ku dar oo maamul alaabta dukaanada.</p>
+        <button onclick="openModal('productModal')">+ Ku dar Alaab</button>
+      </div>
+
+      <!-- Qaybta Macaamiisha -->
+      <div class="card">
+        <h3>Macaamiisha & Shirkadaha</h3>
+        <p>Diiwaangeli macaamiisha iyo deyntooda.</p>
+        <button onclick="openModal('customerModal')">+ Ku dar Macmiil</button>
+      </div>
+
+      <!-- Qaybta Kharashaadka -->
+      <div class="card">
+        <h3>Kharashaadka (Expenses)</h3>
+        <p>Diiwaangeli kharashaadka maalinlaha ah.</p>
+        <button onclick="openModal('expenseModal')">+ Ku dar Kharash</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <h3>Ku dar Alaab Cusub</h3>
+      <div class="form-group">
+        <label>Magaca Alaabta</label>
+        <input type="text" id="pName" placeholder="Tusaale: Bariis">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha la Iibsaday ($) - Cost Price</label>
+        <input type="number" id="pCost" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha Iibka ($) - Selling Price</label>
+        <input type="number" id="pSell" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Nooca Halbeegga (Xabbo, Box, Kg)</label>
+        <input type="text" id="pUnit" placeholder="Xabbo">
+      </div>
+      <div class="form-group">
+        <label>Tirada Bakhaarka</label>
+        <input type="number" id="pStock" placeholder="0">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('productModal')">Ka laabo</button>
+        <button onclick="saveData('Alaab')">Keydi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Modal -->
+  <div id="customerModal" class="modal">
+    <div class="modal-content">
+      <h3>Ku dar Macmiil / Shirkad</h3>
+      <div class="form-group">
+        <label>Magaca Macmiilka / Shirkadda</label>
+        <input type="text" id="cName" placeholder="Magaca">
+      </div>
+      <div class="form-group">
+        <label>Lambarka Telefoonka</label>
+        <input type="tel" id="cPhone" placeholder="61xxxxxxx">
+      </div>
+      <div class="form-group">
+        <label>Haraaga / Deymaha ($) - Balance</label>
+        <input type="number" id="cBalance" placeholder="0.00">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('customerModal')">Ka laabo</button>
+        <button onclick="saveData('Macmiil')">Keydi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expense Modal -->
+  <div id="expenseModal" class="modal">
+    <div class="modal-content">
+      <h3>Ku dar Kharash Cusub</h3>
+      <div class="form-group">
+        <label>Ciwaanka Kharashka</label>
+        <input type="text" id="eTitle" placeholder="Tusaale: Koronto">
+      </div>
+      <div class="form-group">
+        <label>Lacagta Baxday ($)</label>
+        <input type="number" id="eAmount" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Habka Bixinta (Payment Method)</label>
+        <select id="eMethod">
+          <option value="Cash">Cash</option>
+          <option value="Premier Bank">Premier Bank</option>
+          <option value="Salaam Bank">Salaam Bank</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Faahfaahin Kooban</label>
+        <input type="text" id="eDesc" placeholder="Faahfaahin...">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('expenseModal')">Ka laabo</button>
+        <button onclick="saveData('Kharash')">Keydi</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+    function saveData(type) {
+      alert(type + ' si guul leh ayaa loo kaydiyey!');
+      // Waa la xiriirin karaa LocalStorage ama Database hadhow
+      closeModal('productModal');
+      closeModal('customerModal');
+      closeModal('expenseModal');
+    }
+  </script>
+
+</body>
+</html>
