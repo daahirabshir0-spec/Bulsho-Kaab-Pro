@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white text-slate-900 font-sans pb-24" translate="no">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-100 p-4 sticky top-0 z-50 flex justify-between items-center shadow-xs">
+        <div class="flex items-center space-x-3">
+            <button onclick="goHome()" id="backBtn" class="hidden text-xl font-bold text-emerald-800 cursor-pointer">←</button>
+            <div class="flex items-center space-x-2">
+                <span class="text-emerald-800 font-bold text-xl">📖</span>
+                <h1 id="headerTitle" class="text-lg font-bold text-emerald-900 tracking-tight">Bulsho Kaab</h1>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div class="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs font-bold">
+                <span class="bg-emerald-700 text-white px-2.5 py-1 rounded-md shadow-xs">USD</span>
+                <span class="text-slate-500 px-2.5 py-1">SOS</span>
+            </div>
+            <span class="text-xl font-bold cursor-pointer text-slate-700 p-1">☰</span>
+        </div>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4">
+        
+        <!-- Home Dashboard View -->
+        <div id="homeView" class="space-y-6">
+            <div class="text-center pt-2 pb-1">
+                <h2 class="text-2xl font-bold text-emerald-900">Bulsho Kaab Pro</h2>
+                <p class="text-xs text-slate-400 mt-1">Doorso qaybta aad rabto · Select a module to get started</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pb-10">
+                <!-- Iibka -->
+                <div onclick="openModule('sales')" class="bg-emerald-50/65 border border-emerald-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📈</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Iibka</h3>
+                        <p class="text-xs text-slate-500 font-medium">Sales</p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Macaamiisha -->
+                <div onclick="openModule('customers')" class="bg-blue-50/65 border border-blue-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">👥</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Macaamiisha</h3>
+                        <p class="text-xs text-slate-500 font-medium">Customers</p>
+                    </div>
+                    <span class="text-xs font-bold text-blue-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Dalabka -->
+                <div onclick="openModule('orders')" class="bg-amber-50/65 border border-amber-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-amber-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📋</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Dalabka</h3>
+                        <p class="text-xs text-slate-500 font-medium">Orders</p>
+                    </div>
+                    <span class="text-xs font-bold text-amber-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Shirkadaha -->
+                <div onclick="openModule('companies')" class="bg-purple-50/65 border border-purple-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">🏢</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Shirkadaha</h3>
+                        <p class="text-xs text-slate-500 font-medium">Companies</p>
+                    </div>
+                    <span class="text-xs font-bold text-purple-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Alaabta -->
+                <div onclick="openModule('products')" class="bg-cyan-50/65 border border-cyan-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📦</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Alaabta</h3>
+                        <p class="text-xs text-slate-500 font-medium">Products</p>
+                    </div>
+                    <span class="text-xs font-bold text-cyan-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Kharashaad -->
+                <div onclick="openModule('expenses')" class="bg-rose-50/65 border border-rose-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">🧾</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Kharashaad</h3>
+                        <p class="text-xs text-slate-500 font-medium">Expenses</p>
+                    </div>
+                    <span class="text-xs font-bold text-rose-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Invoice-yada -->
+                <div onclick="openModule('invoices')" class="bg-indigo-50/65 border border-indigo-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📄</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Invoice-yada</h3>
+                        <p class="text-xs text-slate-500 font-medium">Invoices</p>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+
+                <!-- Warbixin -->
+                <div onclick="openModule('reports')" class="bg-sky-50/65 border border-sky-100/80 p-5 rounded-3xl shadow-xs cursor-pointer text-center hover:shadow-md transition flex flex-col items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-3">📊</div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Warbixin</h3>
+                        <p class="text-xs text-slate-500 font-medium">Report</p>
+                    </div>
+                    <span class="text-xs font-bold text-sky-700 mt-3 flex items-center">Open <span class="ml-1">›</span></span>
+                </div>
+            </div>
+            <div class="text-center text-[11px] text-slate-400 pb-6">
+                Bulsho Kaab Pro · Debt & Business Management
+            </div>
+        </div>
+
+        <!-- Generic Module View (For sections while navigating) -->
+        <div id="genericModuleView" class="hidden space-y-3">
+            <div class="bg-white p-3 rounded-2xl border flex items-center shadow-xs">
+                <span class="text-slate-400 mr-2">🔍</span>
+                <input type="text" id="genericSearch" placeholder="Raadi..." class="w-full text-sm outline-none">
+            </div>
+            <div id="genericList" class="space-y-2">
+                <p class="text-xs text-center text-slate-400 py-6">Qeybtan waa diyaar</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function goHome() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('genericModuleView').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('headerTitle').innerText = "Bulsho Kaab";
+        }
+
+        function openModule(mod) {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            document.getElementById('genericModuleView').classList.remove('hidden');
+            
+            let titles = {
+                'sales': 'Iibka (Sales)',
+                'customers': 'Macaamiisha (Customers)',
+                'orders': 'Dalabka (Orders)',
+                'companies': 'Shirkadaha (Companies)',
+                'products': 'Alaabta (Products)',
+                'expenses': 'Kharashaad (Expenses)',
+                'invoices': 'Invoice-yada (Invoices)',
+                'reports': 'Warbixin (Reports)'
+            };
+
+            document.getElementById('headerTitle').innerText = titles[mod] || 'Module';
+            document.getElementById('genericList').innerHTML = `<p class="text-xs text-center text-slate-400 py-10">Qeybtan ${titles[mod]} waa diyaar oo xogteeda waa la gelin karaa.</p>`;
+        }
+    </script>
+</body>
+</html>
