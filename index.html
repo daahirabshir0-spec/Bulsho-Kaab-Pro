@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <style>
+        :root {
+            --primary: #004D40;
+            --accent: #00796B;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #1a1a1a;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; color: var(--primary); }
+        .main-container { max-width: 600px; margin: 15px auto; padding: 0 10px; }
+        .app-title { font-size: 22px; color: var(--primary); font-weight: 800; text-align: center; margin-bottom: 5px; }
+        .app-subtitle { color: #6c757d; font-size: 12px; text-align: center; margin-bottom: 20px; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .module-card { background: var(--card-bg); border-radius: 20px; padding: 18px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-align: center; cursor: pointer; transition: transform 0.1s; }
+        .module-card:active { transform: scale(0.98); }
+        .icon-box { width: 55px; height: 55px; border-radius: 16px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .card-title { font-size: 16px; font-weight: bold; color: #111; margin: 4px 0 2px 0; }
+        .card-subtitle { font-size: 11px; color: #6c757d; margin-bottom: 8px; }
+        .open-btn { color: var(--accent); font-weight: bold; font-size: 12px; }
+        
+        .view-section { display: none; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .view-section.active { display: block; }
+        .back-link { display: inline-block; color: var(--accent); font-weight: bold; margin-bottom: 15px; cursor: pointer; text-decoration: none; font-size: 14px; }
+        
+        /* Form iyo Table Styling */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .btn-submit { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 14px; margin-top: 5px; }
+        .data-list { margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; }
+        .data-item { background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <span>📖</span> Bulsho Kaab
+    </div>
+    <div style="background:#f1f3f5; padding:5px 10px; border-radius:10px; font-weight:bold; font-size:12px;">USD | SOS</div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- HOME DASHBOARD -->
+    <div id="homeView" class="view-section active">
+      <div class="app-title">Bulsho Kaab Pro</div>
+      <div class="app-subtitle">Maamulka Ganacsiga Dukaanka</div>
+
+      <div class="grid-container">
+        <div class="module-card" onclick="showView('salesView')">
+          <div class="icon-box" style="background:#e8f5e9;">📈</div>
+          <div class="card-title">Iibka</div>
+          <div class="card-subtitle">Sales</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('customersView')">
+          <div class="icon-box" style="background:#e3f2fd;">👥</div>
+          <div class="card-title">Macaamiisha</div>
+          <div class="card-subtitle">Customers</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('ordersView')">
+          <div class="icon-box" style="background:#fff8e1;">📋</div>
+          <div class="card-title">Dalabka</div>
+          <div class="card-subtitle">Orders</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('companiesView')">
+          <div class="icon-box" style="background:#f3e5f5;">🏢</div>
+          <div class="card-title">Shirkadaha</div>
+          <div class="card-subtitle">Companies</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('productsView')">
+          <div class="icon-box" style="background:#e0f2f1;">📦</div>
+          <div class="card-title">Alaabta</div>
+          <div class="card-subtitle">Products</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('expensesView')">
+          <div class="icon-box" style="background:#ffebee;">🧾</div>
+          <div class="card-title">Kharashaad</div>
+          <div class="card-subtitle">Expenses</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. IIBKA VIEW -->
+    <div id="salesView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Diiwaanka Iibka (Sales)</h3>
+      <div class="form-group">
+        <label>Magaca Badeecada</label>
+        <input type="text" id="saleItem" placeholder="Tusaale: Sokor, Bariis...">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha ($)</label>
+        <input type="number" id="salePrice" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('sales')">Diiwaangeli Iibka</button>
+      <div class="data-list" id="salesList"></div>
+    </div>
+
+    <!-- 2. MACAAMIISHA VIEW -->
+    <div id="customersView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Maamulka Macaamiisha</h3>
+      <div class="form-group">
+        <label>Magaca Macmiilka</label>
+        <input type="text" id="custName" placeholder="Magaca oo buuxa">
+      </div>
+      <div class="form-group">
+        <label>Teleefanka</label>
+        <input type="text" id="custPhone" placeholder="061xxxxxxx">
+      </div>
+      <button class="btn-submit" onclick="addRecord('customers')">Ku dar Macmiil</button>
+      <div class="data-list" id="customersList"></div>
+    </div>
+
+    <!-- 3. DALABKA VIEW -->
+    <div id="ordersView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Dalabyada Cusub (Orders)</h3>
+      <div class="form-group">
+        <label>Faahfaahinta Dalabka</label>
+        <input type="text" id="orderDesc" placeholder="Maxaa la dalbaday?">
+      </div>
+      <button class="btn-submit" onclick="addRecord('orders')">Keydi Dalabka</button>
+      <div class="data-list" id="ordersList"></div>
+    </div>
+
+    <!-- 4. SHIRKADAHA VIEW -->
+    <div id="companiesView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Shirkadaha Alaabta Keena</h3>
+      <div class="form-group">
+        <label>Magaca Shirkadda</label>
+        <input type="text" id="compName" placeholder="Tusaale: Shirkadda Xamuulka...">
+      </div>
+      <button class="btn-submit" onclick="addRecord('companies')">Ku dar Shirkad</button>
+      <div class="data-list" id="companiesList"></div>
+    </div>
+
+    <!-- 5. ALAABTA VIEW -->
+    <div id="productsView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Galka Alaabta (Products)</h3>
+      <div class="form-group">
+        <label>Magaca Alaabta</label>
+        <input type="text" id="prodName" placeholder="Badeecada cusub">
+      </div>
+      <div class="form-group">
+        <label>Tirada (Quantity)</label>
+        <input type="number" id="prodQty" placeholder="Tiroda ka jirta dukaanka">
+      </div>
+      <button class="btn-submit" onclick="addRecord('products')">Ku dar Alaab</button>
+      <div class="data-list" id="productsList"></div>
+    </div>
+
+    <!-- 6. KHARASHAAD VIEW -->
+    <div id="expensesView" class="view-section">
+      <div class="back-link" onclick="showView('home')">&larr; Dib u noqo</div>
+      <h3>Diiwaanka Kharashaadka</h3>
+      <div class="form-group">
+        <label>Nooca Kharashka</label>
+        <input type="text" id="expDesc" placeholder="Tusaale: Koronto, Kirada...">
+      </div>
+      <div class="form-group">
+        <label>Lacagta ($)</label>
+        <input type="number" id="expAmount" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('expenses')">Diiwaangeli Kharashka</button>
+      <div class="data-list" id="expensesList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function showView(viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+    }
+
+    function addRecord(type) {
+      if(type === 'sales') {
+        let item = document.getElementById('saleItem').value;
+        let price = document.getElementById('salePrice').value;
+        if(!item) return alert fadlan geli magaca alaabta;
+        let list = document.getElementById('salesList');
+        list.innerHTML += `<div class="data-item"><span><b>${item}</b></span><span>$${price}</span></div>`;
+        document.getElementById('saleItem').value = '';
+        document.getElementById('salePrice').value = '';
+      } else if(type === 'customers') {
+        let name = document.getElementById('custName').value;
+        let phone = document.getElementById('custPhone').value;
+        if(!name) return;
+        let list = document.getElementById('customersList');
+        list.innerHTML += `<div class="data-item"><span><b>${name}</b></span><span>${phone}</span></div>`;
+        document.getElementById('custName').value = '';
+        document.getElementById('custPhone').value = '';
+      } else if(type === 'orders') {
+        let desc = document.getElementById('orderDesc').value;
+        if(!desc) return;
+        let list = document.getElementById('ordersList');
+        list.innerHTML += `<div class="data-item"><span><b>${desc}</b></span><span>Cusub</span></div>`;
+        document.getElementById('orderDesc').value = '';
+      } else if(type === 'companies') {
+        let name = document.getElementById('compName').value;
+        if(!name) return;
+        let list = document.getElementById('companiesList');
+        list.innerHTML += `<div class="data-item"><span><b>${name}</b></span><span>Diiwaangashan</span></div>`;
+        document.getElementById('compName').value = '';
+      } else if(type === 'products') {
+        let name = document.getElementById('prodName').value;
+        let qty = document.getElementById('prodQty').value;
+        if(!name) return;
+        let list = document.getElementById('productsList');
+        list.innerHTML += `<div class="data-item"><span><b>${name}</b></span><span>Tirada: ${qty}</span></div>`;
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodQty').value = '';
+      } else if(type === 'expenses') {
+        let desc = document.getElementById('expDesc').value;
+        let amt = document.getElementById('expAmount').value;
+        if(!desc) return;
+        let list = document.getElementById('expensesList');
+        list.innerHTML += `<div class="data-item"><span><b>${desc}</b></span><span>$${amt}</span></div>`;
+        document.getElementById('expDesc').value = '';
+        document.getElementById('expAmount').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
