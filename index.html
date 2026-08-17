@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulsho Kaab Pro</title>
+    <style>
+        :root {
+            --primary: #004D40;
+            --accent: #00796B;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #1a1a1a;
+            --danger: #d9534f;
+            --success: #2e7d32;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; color: var(--primary); }
+        .main-container { max-width: 600px; margin: 15px auto; padding: 0 10px; }
+        .app-title { font-size: 22px; color: var(--primary); font-weight: 800; text-align: center; margin-bottom: 5px; }
+        .app-subtitle { color: #6c757d; font-size: 12px; text-align: center; margin-bottom: 20px; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .module-card { background: var(--card-bg); border-radius: 20px; padding: 18px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-align: center; cursor: pointer; transition: transform 0.1s; }
+        .module-card:active { transform: scale(0.98); }
+        .icon-box { width: 55px; height: 55px; border-radius: 16px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .card-title { font-size: 16px; font-weight: bold; color: #111; margin: 4px 0 2px 0; }
+        .card-subtitle { font-size: 11px; color: #6c757d; margin-bottom: 8px; }
+        .open-btn { color: var(--accent); font-weight: bold; font-size: 12px; }
+        
+        .view-section { display: none; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .view-section.active { display: block; }
+        .back-link { display: inline-block; color: var(--accent); font-weight: bold; margin-bottom: 15px; cursor: pointer; text-decoration: none; font-size: 14px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .btn-submit { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 14px; margin-top: 5px; }
+        .data-list { margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; max-height: 350px; overflow-y: auto; }
+        .data-item { background: #f8f9fa; padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; cursor: pointer; border-left: 4px solid var(--accent); }
+        .total-box { background: #e0f2f1; padding: 12px; border-radius: 8px; margin-bottom: 12px; font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; font-size: 14px; }
+        .del-btn { background: var(--danger); color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+        
+        /* Customer Profile Specifics */
+        .profile-header { background: #f1f8e9; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .action-bar { display: flex; justify-content: space-around; margin: 15px 0; background: #fafafa; padding: 10px; border-radius: 10px; }
+        .action-icon { text-align: center; font-size: 11px; color: var(--primary); text-decoration: none; font-weight: bold; }
+        .action-icon span { display: block; font-size: 20px; margin-bottom: 3px; }
+        .debt-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-debt-add { background: var(--danger); color: white; flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-debt-sub { background: var(--success); color: white; flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <span>📖</span> Bulsho Kaab
+    </div>
+    <div style="background:#f1f3f5; padding:5px 10px; border-radius:10px; font-weight:bold; font-size:12px;">USD | SOS</div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- HOME DASHBOARD -->
+    <div id="homeView" class="view-section active">
+      <div class="app-title">Bulsho Kaab Pro</div>
+      <div class="app-subtitle">Maamulka Ganacsiga Dukaanka</div>
+
+      <div class="grid-container">
+        <div class="module-card" onclick="showView('salesView')">
+          <div class="icon-box" style="background:#e8f5e9;">📈</div>
+          <div class="card-title">Iibka</div>
+          <div class="card-subtitle">Sales</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('customersView')">
+          <div class="icon-box" style="background:#e3f2fd;">👥</div>
+          <div class="card-title">Macaamiisha</div>
+          <div class="card-subtitle">Customers</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('ordersView')">
+          <div class="icon-box" style="background:#fff8e1;">📋</div>
+          <div class="card-title">Dalabka</div>
+          <div class="card-subtitle">Orders</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('companiesView')">
+          <div class="icon-box" style="background:#f3e5f5;">🏢</div>
+          <div class="card-title">Shirkadaha</div>
+          <div class="card-subtitle">Companies</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('productsView')">
+          <div class="icon-box" style="background:#e0f2f1;">📦</div>
+          <div class="card-title">Alaabta</div>
+          <div class="card-subtitle">Products</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('expensesView')">
+          <div class="icon-box" style="background:#ffebee;">🧾</div>
+          <div class="card-title">Kharashaad</div>
+          <div class="card-subtitle">Expenses</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('cashView')">
+          <div class="icon-box" style="background:#e1f5fe;">📘</div>
+          <div class="card-title">Kaashka</div>
+          <div class="card-subtitle">Cash Book</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+
+        <div class="module-card" onclick="showView('accountView')">
+          <div class="icon-box" style="background:#e8f8f5;">🏛️</div>
+          <div class="card-title">Akoon</div>
+          <div class="card-subtitle">Accounts</div>
+          <div class="open-btn">Open &gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. IIBKA -->
+    <div id="salesView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Diiwaanka Iibka (Sales)</h3>
+      <div class="total-box"><span>Wadarta Guud:</span> <span id="salesTotal">$0.00</span></div>
+      <div class="form-group">
+        <label>Magaca Badeecada / Adeegga</label>
+        <input type="text" id="saleItem" placeholder="Tusaale: Sokor, Bariis...">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha ($)</label>
+        <input type="number" id="salePrice" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('sales')">Diiwaangeli Iibka</button>
+      <div class="data-list" id="salesList"></div>
+    </div>
+
+    <!-- 2. MACAAMIISHA (LIST) -->
+    <div id="customersView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Maamulka Macaamiisha & Deymaha</h3>
+      <div class="total-box"><span>Wadarta Deynta Lagu Leeyahay:</span> <span id="custTotal">$0.00</span></div>
+      
+      <div class="form-group">
+        <label>Magaca Macmiilka</label>
+        <input type="text" id="custName" placeholder="Magaca oo buuxa">
+      </div>
+      <div class="form-group">
+        <label>Teleefanka</label>
+        <input type="text" id="custPhone" placeholder="061xxxxxxx">
+      </div>
+      <div class="form-group">
+        <label>Xisaabta Deynta Bilowga ah ($)</label>
+        <input type="number" id="custDebt" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addCustomer()">Ku dar Macmiil</button>
+      
+      <div class="data-list" id="customersList"></div>
+    </div>
+
+    <!-- 2.1 MACMIILKA GAARKA AH (PROFILE VIEW) -->
+    <div id="customerProfileView" class="view-section">
+      <div class="back-link" onclick="showView('customersView')">&larr; Ku noqo Liiska Macaamiisha</div>
+      <div class="profile-header">
+        <h3 id="profName" style="margin:0 0 5px 0; color:var(--primary);">Magaca Macmiilka</h3>
+        <p id="profPhone" style="margin:0; color:#555; font-size:13px;"></p>
+      </div>
+
+      <!-- Action Bar (Call, SMS, WhatsApp) -->
+      <div class="action-bar">
+        <a href="#" id="actionCall" class="action-icon"><span>📞</span>Wac</a>
+        <a href="#" id="actionSms" class="action-icon"><span>💬</span>SMS</a>
+        <a href="#" id="actionWa" class="action-icon" style="color:#2e7d32;"><span>💚</span>WhatsApp</a>
+      </div>
+
+      <div class="total-box">
+        <span>Haraa aad ku leedahay:</span> 
+        <span id="profDebt">$0.00</span>
+      </div>
+
+      <div class="form-group">
+        <label>Qadarka Lacagta ($)</label>
+        <input type="number" id="transAmount" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Faahfaahinta (Faahfaahin kooban)</label>
+        <input type="text" id="transDesc" placeholder="Tusaale: Bariis, Omo...">
+      </div>
+
+      <div class="debt-actions">
+        <button class="btn-debt-add" onclick="processDebt('add')">+ Deyn Ku Qor</button>
+        <button class="btn-debt-sub" onclick="processDebt('sub')">- Deyn Ka Jar</button>
+      </div>
+
+      <h4 style="margin-top:20px; font-size:14px; color:var(--primary);">Dhaqdhaqaaqa Deynta Macmiilkan:</h4>
+      <div class="data-list" id="transList"></div>
+    </div>
+
+    <!-- 3. DALABKA -->
+    <div id="ordersView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Dalabyada Cusub (Orders)</h3>
+      <div class="form-group">
+        <label>Magaca Macmiilka ama Goobta</label>
+        <input type="text" id="orderCust" placeholder="Yaa dalbaday?">
+      </div>
+      <div class="form-group">
+        <label>Faahfaahinta Dalabka</label>
+        <input type="text" id="orderDesc" placeholder="Maxaa la dalbaday?">
+      </div>
+      <button class="btn-submit" onclick="addRecord('orders')">Keydi Dalabka</button>
+      <div class="data-list" id="ordersList"></div>
+    </div>
+
+    <!-- 4. SHIRKADAHA -->
+    <div id="companiesView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Shirkadaha Alaabta Keena</h3>
+      <div class="form-group">
+        <label>Magaca Shirkadda</label>
+        <input type="text" id="compName" placeholder="Tusaale: Shirkadda Xamuulka...">
+      </div>
+      <div class="form-group">
+        <label>Teleefanka / Qofka Xiriirka</label>
+        <input type="text" id="compPhone" placeholder="061xxxxxxx">
+      </div>
+      <button class="btn-submit" onclick="addRecord('companies')">Ku dar Shirkad</button>
+      <div class="data-list" id="companiesList"></div>
+    </div>
+
+    <!-- 5. ALAABTA -->
+    <div id="productsView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Galka Alaabta (Products)</h3>
+      <div class="form-group">
+        <label>Magaca Alaabta</label>
+        <input type="text" id="prodName" placeholder="Badeecada cusub">
+      </div>
+      <div class="form-group">
+        <label>Tirada (Quantity)</label>
+        <input type="number" id="prodQty" placeholder="Tirada ka jirta dukaanka">
+      </div>
+      <div class="form-group">
+        <label>Qiimaha Midkiiba ($)</label>
+        <input type="number" id="prodPrice" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('products')">Ku dar Alaab</button>
+      <div class="data-list" id="productsList"></div>
+    </div>
+
+    <!-- 6. KHARASHAAD -->
+    <div id="expensesView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Diiwaanka Kharashaadka</h3>
+      <div class="total-box"><span>Wadarta Kharashka:</span> <span id="expensesTotal">$0.00</span></div>
+      <div class="form-group">
+        <label>Nooca Kharashka</label>
+        <input type="text" id="expDesc" placeholder="Tusaale: Koronto, Kirada...">
+      </div>
+      <div class="form-group">
+        <label>Lacagta ($)</label>
+        <input type="number" id="expAmount" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('expenses')">Diiwaangeli Kharashka</button>
+      <div class="data-list" id="expensesList"></div>
+    </div>
+
+    <!-- 7. KAASHKA -->
+    <div id="cashView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Diiwaanka Kaashka (Cash Book)</h3>
+      <div class="total-box"><span>Hadhiga Kaashka:</span> <span id="cashTotal">$0.00</span></div>
+      <div class="form-group">
+        <label>Faahfaahinta Dhaqdhaqaaqa</label>
+        <input type="text" id="cashDesc" placeholder="Tusaale: Lacag la soo xareeyay...">
+      </div>
+      <div class="form-group">
+        <label>Nooca (Soo Gacnay / Baxay)</label>
+        <select id="cashType">
+          <option value="in">Lacag Soo Gacshay (+)</option>
+          <option value="out">Lacag Baxday (-)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Lacagta ($)</label>
+        <input type="number" id="cashAmount" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('cash')">Diiwaangeli Kaashka</button>
+      <div class="data-list" id="cashList"></div>
+    </div>
+
+    <!-- 8. AKOON -->
+    <div id="accountView" class="view-section">
+      <div class="back-link" onclick="showView('homeView')">&larr; Dib u noqo</div>
+      <h3>Maamulka Akoonada (Accounts)</h3>
+      <div class="form-group">
+        <label>Magaca Xisaabta / Bangiga</label>
+        <input type="text" id="accName" placeholder="Tusaale: EvcPlus, Salaam Bank...">
+      </div>
+      <div class="form-group">
+        <label>Haraaga Akoonka ($)</label>
+        <input type="number" id="accBalance" placeholder="0.00">
+      </div>
+      <button class="btn-submit" onclick="addRecord('account')">Ku dar Akoon</button>
+      <div class="data-list" id="accountList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentCustomerId = null;
+
+    function showView(viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+    }
+
+    window.onload = function() {
+      renderData('sales');
+      renderCustomers();
+      renderData('orders');
+      renderData('companies');
+      renderData('products');
+      renderData('expenses');
+      renderData('cash');
+      renderData('account');
+    };
+
+    function getData(type) {
+      let data = localStorage.getItem('bulsho_' + type);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveData(type, data) {
+      localStorage.setItem('bulsho_' + type, JSON.stringify(data));
+    }
+
+    // --- CUSTOMERS LOGIC ---
+    function addCustomer() {
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let debt = parseFloat(document.getElementById('custDebt').value || 0);
+      if(!name) return;
+
+      let customers = getData('customers');
+      let newCust = {
+        id: Date.now(),
+        name,
+        phone,
+        debt,
+        transactions: debt > 0 ? [{date: new Date().toLocaleDateString(), desc: 'Deyn bilow ah', amt: debt, type: 'add'}] : []
+      };
+      customers.push(newCust);
+      saveData('customers', customers);
+
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+      document.getElementById('custDebt').value = '';
+      renderCustomers();
+    }
+
+    function renderCustomers() {
+      let list = document.getElementById('customersList');
+      if (!list) return;
+      let customers = getData('customers');
+      list.innerHTML = '';
+      let totalDebt = 0;
+
+      customers.forEach((cust, index) => {
+        totalDebt += parseFloat(cust.debt || 0);
+        list.innerHTML += `
+          <div class="data-item" onclick="openCustomerProfile(${cust.id})">
+            <div>
+              <b>${cust.name}</b><br>
+              <small style="color:#666;">${cust.phone || 'Teleefon malahan'}</small>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:11px; color:#666;">Deynta:</span><br>
+              <b style="color:var(--danger);">$${parseFloat(cust.debt).toFixed(2)}</b>
+            </div>
+          </div>`;
+      });
+      document.getElementById('custTotal').innerText = '$' + totalDebt.toFixed(2);
+    }
+
+    function openCustomerProfile(id) {
+      currentCustomerId = id;
+      let customers = getData('customers');
+      let cust = customers.find(c => c.id === id);
+      if(!cust) return;
+
+      document.getElementById('profName').innerText = cust.name;
+      document.getElementById('profPhone').innerText = cust.phone ? 'Tel: ' + cust.phone : '';
+      document.getElementById('profDebt').innerText = '$' + parseFloat(cust.debt).toFixed(2);
+
+      // Set links for actions
+      document.getElementById('actionCall').href = cust.phone ? `tel:${cust.phone}` : '#';
+      document.getElementById('actionSms').href = cust.phone ? `sms:${cust.phone}` : '#';
+      document.getElementById('actionWa').href = cust.phone ? `https://wa.me/${cust.phone.replace(/[^0-9]/g, '')}` : '#';
+
+      renderTransactions(cust);
+      showView('customerProfileView');
+    }
+
+    function renderTransactions(cust) {
+      let list = document.getElementById('transList');
+      list.innerHTML = '';
+      if(!cust.transactions || cust.transactions.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color:#777; font-size:13px;">Ma jiro dhaqdhaqaaq deyn ah dambe.</p>';
+        return;
+      }
+
+      cust.transactions.slice().reverse().forEach((tx, idx) => {
+        let color = tx.type === 'add' ? 'var(--danger)' : 'var(--success)';
+        let sign = tx.type === 'add' ? '+' : '-';
+        list.innerHTML += `
+          <div style="background:#f8f9fa; padding:10px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; font-size:13px;">
+            <div>
+              <span style="font-size:11px; color:#888;">${tx.date}</span><br>
+              <b>${tx.desc || 'Deyn isbedel'}</b>
+            </div>
+            <div style="color:${color}; font-weight:bold;">
+              ${sign}$${parseFloat(tx.amt).toFixed(2)}
+            </div>
+          </div>`;
+      });
+    }
+
+    function processDebt(type) {
+      let amt = parseFloat(document.getElementById('transAmount').value);
+      let desc = document.getElementById('transDesc').value;
+      if(!amt || isNaN(amt)) return;
+
+      let customers = getData('customers');
+      let cust = customers.find(c => c.id === currentCustomerId);
+      if(!cust) return;
+
+      if(type === 'add') {
+        cust.debt += amt;
+      } else {
+        cust.debt -= amt;
+      }
+
+      if(!cust.transactions) cust.transactions = [];
+      cust.transactions.push({
+        date: new Date().toLocaleDateString(),
+        desc: desc || (type === 'add' ? 'Deyn lagu daray' : 'Deyn la bixiyay'),
+        amt: amt,
+        type: type
+      });
+
+      saveData('customers', customers);
+      
+      document.getElementById('transAmount').value = '';
+      document.getElementById('transDesc').value = '';
+      
+      // Refresh view
+      openCustomerProfile(currentCustomerId);
+    }
+
+    // --- GENERIC MODULES LOGIC ---
+    function renderData(type) {
+      let list = document.getElementById(type + 'List');
+      if (!list) return;
+      let items = getData(type);
+      list.innerHTML = '';
+      let total = 0;
+
+      items.forEach((item, index) => {
+        if(type === 'sales') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.name}</b> - $${item.price}</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+          total += parseFloat(item.price || 0);
+        } else if(type === 'orders') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.cust}</b>: ${item.desc}</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+        } else if(type === 'companies') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.name}</b> (${item.phone})</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+        } else if(type === 'products') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.name}</b> - Tirada: ${item.qty} | Qiimaha: $${item.price}</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+        } else if(type === 'expenses') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.desc}</b> - $${item.amt}</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+          total += parseFloat(item.amt || 0);
+        } else if(type === 'cash') {
+          let sign = item.cType === 'in' ? '+' : '-';
+          let color = item.cType === 'in' ? 'green' : 'red';
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.desc}</b> - <span style="color:${color}">${sign}$${item.amt}</span></span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+          total += item.cType === 'in' ? parseFloat(item.amt || 0) : -parseFloat(item.amt || 0);
+        } else if(type === 'account') {
+          list.innerHTML += `<div class="data-item" style="cursor:default;"><span><b>${item.name}</b> - Haraa: $${item.bal}</span> <button class="del-btn" onclick="deleteItem('${type}', ${index})">Tirtir</button></div>`;
+        }
+      });
+
+      if(type === 'sales') {
+        document.getElementById('salesTotal').innerText = '$' + total.toFixed(2);
+      } else if(type === 'expenses') {
+        document.getElementById('expensesTotal').innerText = '$' + total.toFixed(2);
+      } else if(type === 'cash') {
+        document.getElementById('cashTotal').innerText = '$' + total.toFixed(2);
+      }
+    }
+
+    function addRecord(type) {
+      let items = getData(type);
+      
+      if(type === 'sales') {
+        let name = document.getElementById('saleItem').value;
+        let price = document.getElementById('salePrice').value;
+        if(!name) return;
+        items.push({name, price: price || 0});
+        document.getElementById('saleItem').value = '';
+        document.getElementById('salePrice').value = '';
+      } else if(type === 'orders') {
+        let cust = document.getElementById('orderCust').value;
+        let desc = document.getElementById('orderDesc').value;
+        if(!desc) return;
+        items.push({cust: cust || 'Macaamiil', desc});
+        document.getElementById('orderCust').value = '';
+        document.getElementById('orderDesc').value = '';
+      } else if(type === 'companies') {
+        let name = document.getElementById('compName').value;
+        let phone = document.getElementById('compPhone').value;
+        if(!name) return;
+        items.push({name, phone});
+        document.getElementById('compName').value = '';
+        document.getElementById('compPhone').value = '';
+      } else if(type === 'products') {
+        let name = document.getElementById('prodName').value;
+        let qty = document.getElementById('prodQty').value;
+        let price = document.getElementById('prodPrice').value;
+        if(!name) return;
+        items.push({name, qty: qty || 0, price: price || 0});
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodQty').value = '';
+        document.getElementById('prodPrice').value = '';
+      } else if(type === 'expenses') {
+        let desc = document.getElementById('expDesc').value;
+        let amt = document.getElementById('expAmount').value;
+        if(!desc) return;
+        items.push({desc, amt: amt || 0});
+        document.getElementById('expDesc').value = '';
+        document.getElementById('expAmount').value = '';
+      } else if(type === 'cash') {
+        let desc = document.getElementById('cashDesc').value;
+        let cType = document.getElementById('cashType').value;
+        let amt = document.getElementById('cashAmount').value;
+        if(!desc) return;
+        items.push({desc, cType, amt: amt || 0});
+        document.getElementById('cashDesc').value = '';
+        document.getElementById('cashAmount').value = '';
+      } else if(type === 'account') {
+        let name = document.getElementById('accName').value;
+        let bal = document.getElementById('accBalance').value;
+        if(!name) return;
+        items.push({name, bal: bal || 0});
+        document.getElementById('accName').value = '';
+        document.getElementById('accBalance').value = '';
+      }
+
+      saveData(type, items);
+      renderData(type);
+    }
+
+    function deleteItem(type, index) {
+      let items = getData(type);
+      items.splice(index, 1);
+      saveData(type, items);
+      renderData(type);
+    }
+  </script>
+</body>
+</html>
